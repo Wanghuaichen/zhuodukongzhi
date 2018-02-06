@@ -30,7 +30,7 @@
 /* ----------------------- Static variables ---------------------------------*/
 ALIGN(RT_ALIGN_SIZE)
 /* software simulation serial transmit IRQ handler thread stack */
-static rt_uint8_t serial_soft_trans_irq_stack[512];
+static rt_uint8_t serial_soft_trans_irq_stack[1024];
 /* software simulation serial transmit IRQ handler thread */
 static struct rt_thread thread_serial_soft_trans_irq;
 /* serial event */
@@ -41,6 +41,7 @@ static rt_serial_t *serial;
 /* ----------------------- Defines ------------------------------------------*/
 /* serial transmit event */
 #define EVENT_SERIAL_TRANS_START    (1<<0)
+#define MODBUS_SLAVE_RT_CONTROL_PIN_INDEX 33            // 27
 
 /* ----------------------- static functions ---------------------------------*/
 static void prvvUARTTxReadyISR(void);

@@ -63,6 +63,25 @@ static uint8_t statKeyDownMenuDown(void)
     }
 }
 
+static uint8_t statKeyDownMenuOk(void)
+{
+    if( MenuKeyDown() && OkKeyDown() )
+    {
+        return 1;
+    }
+    else if( MenuKeyDown() && (!OkKeyDown()) )
+    {
+        return 2;
+    }
+    else if( (!MenuKeyDown()) && OkKeyDown() )
+    {
+        return 3;
+    }
+    else
+    {
+        return 0;
+    }
+}
 /*
 *********************************************************************************************************
 *	函 数 名:  InitButton
@@ -176,7 +195,7 @@ static void InitButtonVar(void)
 	s_BtnUp.State = 0;								/* 按键缺省状态，0为未按下 */
 	s_BtnUp.KeyCodeDown = KEY_DOWN_UP;              /* 按键按下的键值代码 */
 	s_BtnUp.KeyCodeUp = KEY_UP_UP;                          /* 按键弹起的键值代码，0表示不检测 */
-	s_BtnUp.KeyCodeLong = KEY_LONG_UP;                        /* 按键被持续按下的键值代码，0表示不检测 */
+	s_BtnUp.KeyCodeLong = 0;                        /* 按键被持续按下的键值代码，0表示不检测 */
  		
 
 	/* 初始化DOWN按键变量，支持按下、连发（周期10ms） */
@@ -187,7 +206,7 @@ static void InitButtonVar(void)
 	s_BtnDown.State = 0;
 	s_BtnDown.KeyCodeDown = KEY_DOWN_DOWN;
 	s_BtnDown.KeyCodeUp = KEY_UP_DOWN; 
-	s_BtnDown.KeyCodeLong = KEY_LONG_DOWN;
+	s_BtnDown.KeyCodeLong = 0;
     
 	/* 初始化Ok按键变量，支持按下 */
 	s_BtnOk.IsKeyDownFunc = statKeyDownOk;
@@ -197,7 +216,7 @@ static void InitButtonVar(void)
 	s_BtnOk.State = 0;
 	s_BtnOk.KeyCodeDown = KEY_DOWN_OK;
 	s_BtnOk.KeyCodeUp = KEY_UP_OK;
-	s_BtnOk.KeyCodeLong = KEY_LONG_OK;
+	s_BtnOk.KeyCodeLong = 0;
 	
 	// 初始化Menu按键变量，支持按下
 	s_BtnMenu.IsKeyDownFunc = statKeyDownMenu; 
@@ -207,7 +226,7 @@ static void InitButtonVar(void)
 	s_BtnMenu.State = 0;
 	s_BtnMenu.KeyCodeDown = KEY_DOWN_MENU;          
 	s_BtnMenu.KeyCodeUp = KEY_UP_MENU;                        
-	s_BtnMenu.KeyCodeLong = KEY_LONG_MENU; 
+	s_BtnMenu.KeyCodeLong = 0; 
                       
     
     s_BtnMenuUp.IsKeyDownFunc = statKeyDownMenuUp;       
@@ -232,6 +251,16 @@ static void InitButtonVar(void)
 	s_BtnMenuDown.keyCodeCombPrime1_2 = KEY_COMB_MENU_PRIM_DOWN;                       
 	s_BtnMenuDown.keyCodeCombPrime2_1 = KEY_COMB_DOWN_PRIM_MENU;  
     
+    s_BtnMenuOk.IsKeyDownFunc = statKeyDownMenuOk;       
+	s_BtnMenuOk.FilterTime = BUTTON_FILTER_TIME;     
+	s_BtnMenuOk.LongTime = 0;                         
+	s_BtnMenuOk.Count = s_BtnMenuOk.FilterTime / 2;    
+	s_BtnMenuOk.State = 0;                            
+	s_BtnMenuOk.KeyCodeDown = 0;         
+	s_BtnMenuOk.KeyCodeUp = 0;                  
+	s_BtnMenuOk.KeyCodeLong = 0;                     
+	s_BtnMenuOk.keyCodeCombPrime1_2 = KEY_DOWN_MENU_AND_OK;                       
+	s_BtnMenuOk.keyCodeCombPrime2_1 = 0; 
 }
 
 /*
@@ -413,5 +442,6 @@ void KeyPro(void)
     DetectButton(&s_BtnOk);        
     DetectButton(&s_BtnMenu);      
     DetectButton(&s_BtnMenuUp);      
-    DetectButton(&s_BtnMenuDown);      
+    DetectButton(&s_BtnMenuDown);
+    DetectButton(&s_BtnMenuOk);
 }

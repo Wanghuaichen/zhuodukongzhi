@@ -34,6 +34,9 @@
 #define LCD_SDA_1()  LCD_GPIO_SDA_PORT->BSRR = LCD_GPIO_SDA 
 #define LCD_SDA_0()  LCD_GPIO_SDA_PORT->BRR = LCD_GPIO_SDA 
 
+// frame buffer
+static uint8_t lcd_buf[8][128];
+
 static void delay(int i)
 {
 	volatile int j,k;
@@ -189,7 +192,7 @@ void ClearLCD(void)
     LCD_DisplayString(0,16,"                ",NOT_REVERSE);
     LCD_DisplayString(0,32,"                ",NOT_REVERSE);
     LCD_DisplayString(0,48,"                ",NOT_REVERSE);
-	
+	lcd_buf_flush();
 }
 
 void fill_disp_buf(char* buf_up,char* buf_down,char *c,uint8_t width,uint8_t reverse)
@@ -247,16 +250,17 @@ LCD_FastDisplayString
 //Xpos:0-127
 //Ypos:0-63
 //
-static char dispBuf[2][128];
 void LCD_DisplayString(uint16_t Xpos, uint16_t Ypos, char *ptr,uint8_t reverse)
 {
 	uint16_t i = 0;
 	uint8_t code1,code2,code3;
 	
 	uint8_t len;
-	char *c,*buf_up,*buf_down;
-	buf_up = &dispBuf[0][0];
-	buf_down = &dispBuf[1][0];
+	char *c,*buf_up,*buf_down,*p =(char*)lcd_buf;
+    
+    buf_up = &p[(Ypos >> 3)*128 +Xpos];
+    buf_down = &p[(Ypos >> 3)*128 +128 + Xpos];
+    
 	len = 0;
 	while ((*ptr != 0) & (i < 16))
 	{
@@ -298,19 +302,94 @@ void LCD_DisplayString(uint16_t Xpos, uint16_t Ypos, char *ptr,uint8_t reverse)
 		}
 	}
 	//display
-	LCD_byte_pos(Ypos >> 3, Xpos);
-	for(i = 0; i < len; i++)
-	{
-		transfer_dat(dispBuf[0][i]);
-	}
-	LCD_byte_pos( (Ypos >> 3) + 1, Xpos);
-	for(i = 0; i < len; i++)
-	{
-		transfer_dat(dispBuf[1][i]);
-	}
+//	LCD_byte_pos(Ypos >> 3, Xpos);
+//	for(i = 0; i < len; i++)
+//	{
+//		transfer_dat(dispBuf[0][i]);
+//	}
+//	LCD_byte_pos( (Ypos >> 3) + 1, Xpos);
+//	for(i = 0; i < len; i++)
+//	{
+//		transfer_dat(dispBuf[1][i]);
+//	}
 }
 
-void draw_locale(uint8_t* buf)
+
+void draw_point(uint8_t x,uint8_t y,uint8_t dat)
 {
-	
+    uint8_t *p = (uint8_t*)lcd_buf;
+    
+    if(y > 63)
+        y = 63;
+    if(y < 2)
+        y = 2;
+    y = 63 - y;
+    if(dat == 1)
+    {
+        p[(y >> 3)*128 +x] |=  (1 << (y%8));
+    }
+    else
+    {
+        p[(y >> 3)*128 +x] &=  ~(1 << (y%8));
+    }
+    LCD_byte_pos( y, x);
+    transfer_dat(p[(y >> 3)*128 +x]);
 }
+
+void draw_point_in_buffer(uint8_t x,uint8_t y,uint8_t dat)
+{
+    uint8_t *p = (uint8_t*)lcd_buf;
+    
+    if(y > 63)
+        y = 63;
+    if(y < 2)
+        y = 2;
+    y = 63 - y;
+    
+    if(dat == 1)
+    {
+        p[(y >> 3)*128 +x] |=  (1 << (y%8));
+    }
+    else
+    {
+        p[(y >> 3)*128 +x] &=  ~(1 << (y%8));
+    }
+}
+
+void lcd_buf_flush(void)
+{
+    int i,j;
+    uint8_t *p = (uint8_t*)lcd_buf;
+    
+    for(i = 0; i < 8; i++)
+    {
+        LCD_byte_pos( i, 0);
+        for(j = 0; j < 128; j++)
+        {
+            transfer_dat(p[i*128+j]);
+        }
+    }
+}
+
+void get_line_dat(uint8_t line,uint8_t *buf)
+{
+	int i;
+    uint8_t *p = (uint8_t*)lcd_buf;
+	
+	for(i = 0; i < 128; i++)
+    {
+        buf[i] = p[line*128+i]; 
+    }
+}
+
+void set_line_dat(uint8_t line,uint8_t *buf)
+{
+	int i;
+    uint8_t *p = (uint8_t*)lcd_buf;
+	
+	for(i = 0; i < 128; i++)
+    {
+        p[line*128+i] = buf[i]; 
+    }
+}
+

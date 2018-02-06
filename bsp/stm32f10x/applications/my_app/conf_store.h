@@ -25,20 +25,13 @@ typedef struct
     uint8_t lcd_contrast;
 	uint8_t is_disp_reverse;
 	//unprotected
-	uint8_t language;
-    
-    uint16_t measure_freq;
-    float container_d;
-	float sensor_freq;
-	
-	signal_cond_t signal_cond[2];
-	uint8_t gain_1;
-	uint8_t gain_2;
-    /* comm */
+    uint8_t unprotected;
+    uint8_t language;
+	/* comm */
     uint8_t comm_format;
     uint8_t comm_baud;
     uint8_t comm_databit;
-    uint8_t comm_check;
+    uint8_t comm_parity;
     uint8_t comm_device_id; 
     
 }E2P_TypeDef;
@@ -48,7 +41,7 @@ typedef struct
 #define E2P_OFFSET(A)               ((uint16_t)offsetof(E2P_TypeDef,A))
 
 #define E2P_EEPROM                  E2P_OFFSET(eeprom)
-#define EE_UNPROTECTED()               E2P_OFFSET(language)
+#define EE_UNPROTECTED()               E2P_OFFSET(unprotected)
 
 
 #ifdef __cplusplus

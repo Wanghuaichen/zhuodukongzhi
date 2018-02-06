@@ -13,6 +13,9 @@ extern "C" {
 #define SIZEOF(s,m)             ( sizeof((s*)0 -> m) )
 #define countof(a)              ( sizeof(a) / sizeof(*(a)) )
 
+typedef float float32_t;
+typedef double float64_t;
+
 enum ChipType
 {
     CHIP_ST = 0,
@@ -29,86 +32,82 @@ enum DATA_TYPE
     FLOAT_64_T
 };
 
-typedef float float32_t;
-typedef double float64_t;
-
-typedef struct
+typedef struct zhudu
 {
-	uint16_t index;	    // time
-	uint16_t mag;
-	uint16_t width;
-}signal_t;
+    
+    // user
+    
+    float turbidimeter_range_1;
+    float turbidimeter_range_2;
+    float turbidimeter_range_3;
+    float turbidimeter_range_4;
+    
+    int16_t canbi_set;
+    int16_t bright_range_set;
+    int16_t ma_cali;
+    
+	//0x100 start
+	int16_t canbi_get;
+	int16_t bright_2;
+	int16_t bright_3;
+	int16_t bright_range;
+	int16_t temp;
+	
+	float turbidimeter;
+	float turbidimeter_range;
+	float absorbance;
+	
+	float a1;
+	float b1;
+	float a2;
+	float b2;
+	float a3;
+	float b3;
+	float a1k1;
+	
+	float seg_range_1;
+	float seg_range_2;
+	int16_t range_sel;
+	
+	int16_t a2_zero;
+	float canbi_calc_get;
+	
+	uint16_t ma_stat;
+	uint16_t num_cali;
+	
+	int16_t signal_unknown;
 
-typedef struct
-{
-    uint16_t* buf_in;
-    uint16_t len;
-    uint8_t buf_index;
-    uint8_t stat;
-	signal_t signal;
-}signal_analysis_t;
-
-
-typedef struct
-{
-    uint8_t index;
-	uint8_t numbers;
-	signal_t signal[10];
-}signals_t;
-
-typedef struct
-{
-	uint16_t start_mag;           //          | top threshold
-    uint16_t end_mag;           //          | bottom threshold
-    uint16_t start_index;       //     (start)--......--(end)
-    uint16_t end_index;         //
-    uint16_t width_min;         //      longest width
-    uint16_t width_max;
-}signal_cond_t;
-
-typedef struct
-{
-	uint8_t index;
-	uint8_t numbers;           // 
-    uint16_t wave[30];
-}signal_wave_t;
+	// 0x200 start
+	float turbidimeter_cali_buf[4];
+	float absorbance_cali_buf[4];
+	uint16_t cali_data_write;
+	uint16_t data_val_0;
+	float seg_range_3;
+	float seg_range_4;
+	float a4;
+	float b4;
+	int16_t cmd_a3_full;
+	int16_t cmd_a2_zero;
+	
+	uint16_t dev_addr;
+	
+}Zhuodu_t;
 
 
 typedef struct
 {
     uint8_t chip_type;
     uint8_t is_disp_reverse;   
-    uint8_t lang;
-	
-    uint8_t ch1_status;         // 0 no liquid 1: 
-    uint8_t ch2_status;
-    
-	uint8_t chSlct;
-	
-	float container_d;
-    
-    float sensor_freq;
-	uint16_t measure_freq;
-    
-	signals_t signals[2];
-	signal_analysis_t signal_analysis;
-	signal_cond_t signal_cond[2];
-	signal_wave_t signal_wave[2];
-	
-	uint8_t gain_1;
-	uint8_t gain_2;
+    uint8_t language;
 	
     // rs485
     uint8_t comm_format;
     uint8_t comm_baud;
-    uint8_t comm_check;
+    uint8_t comm_parity;
     uint8_t comm_device_id;
    
-    float temp_k1;
-    float temp_k2; 
+    Zhuodu_t zhuodu_data;
     
-    float temprature;
-   
     
 }GlobalDef;    
 
@@ -124,10 +123,10 @@ typedef struct
     extern struct rt_mailbox signal_mb;
 	extern rt_device_t mb85_bus;
 	
-    uint8_t get_language(void);
-    void global_init(void);
 #endif
 
+    uint8_t get_language(void);
+    void global_init(void);
 
 #ifdef __cplusplus
 }

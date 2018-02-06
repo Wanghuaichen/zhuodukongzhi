@@ -19,6 +19,7 @@
  * File: $Id: user_mb_app_m.c,v 1.60 2013/11/23 11:49:05 Armink $
  */
 #include "user_mb_app.h"
+#include "global.h"
 
 /*-----------------------Master mode use these variables----------------------*/
 #if MB_MASTER_RTU_ENABLED > 0 || MB_MASTER_ASCII_ENABLED > 0
@@ -108,17 +109,30 @@ eMBErrorCode eMBMasterRegHoldingCB(UCHAR * pucRegBuffer, USHORT usAddress,
     USHORT          REG_HOLDING_START;
     USHORT          REG_HOLDING_NREGS;
     USHORT          usRegHoldStart;
+    uint16_t i;
+    uint8_t *p,*q;
 
     pusRegHoldingBuf = usMRegHoldBuf[ucMBMasterGetDestAddress() - 1];
-    REG_HOLDING_START = M_REG_HOLDING_START;
-    REG_HOLDING_NREGS = M_REG_HOLDING_NREGS;
-    usRegHoldStart = usMRegHoldStart;
+   
     /* if mode is read, the master will write the received date to buffer. */
     eMode = MB_REG_WRITE;
 
     /* it already plus one in modbus function method. */
     usAddress--;
 
+    if(usAddress >= 0x100)
+    {
+        REG_HOLDING_START = 0x100;;
+        REG_HOLDING_NREGS = 100;
+    }
+    else if(usAddress >= 0x200)
+    {
+        REG_HOLDING_START = 0x200;;
+        REG_HOLDING_NREGS = 100;
+    }
+    
+    usRegHoldStart = REG_HOLDING_START;
+    
     if ((usAddress >= REG_HOLDING_START)
             && (usAddress + usNRegs <= REG_HOLDING_START + REG_HOLDING_NREGS))
     {
@@ -126,14 +140,14 @@ eMBErrorCode eMBMasterRegHoldingCB(UCHAR * pucRegBuffer, USHORT usAddress,
         switch (eMode)
         {
         /* read current register values from the protocol stack. */
-        case MB_REG_READ:
-            while (usNRegs > 0)
-            {
-                *pucRegBuffer++ = (UCHAR) (pusRegHoldingBuf[iRegIndex] >> 8);
-                *pucRegBuffer++ = (UCHAR) (pusRegHoldingBuf[iRegIndex] & 0xFF);
-                iRegIndex++;
-                usNRegs--;
-            }
+        case MB_REG_READ:  /// !!! NO USE
+//            while (usNRegs > 0)
+//            {
+//                *pucRegBuffer++ = (UCHAR) (pusRegHoldingBuf[iRegIndex] >> 8);
+//                *pucRegBuffer++ = (UCHAR) (pusRegHoldingBuf[iRegIndex] & 0xFF);
+//                iRegIndex++;
+//                usNRegs--;
+//            }
             break;
         /* write current register values with new values from the protocol stack. */
         case MB_REG_WRITE:
@@ -145,6 +159,24 @@ eMBErrorCode eMBMasterRegHoldingCB(UCHAR * pucRegBuffer, USHORT usAddress,
                 usNRegs--;
             }
             break;
+        }
+        if(usAddress >= 0x100)
+        {
+            p = (uint8_t*)&global.zhuodu_data.canbi_get;
+            q = (uint8_t*)pusRegHoldingBuf;
+            for(i = 0; i < 2*usNRegs; i++)
+            {
+                p[i] = q[i];
+            }
+        }
+        else if(usAddress >= 0x200)
+        {
+            p = (uint8_t*)&global.zhuodu_data.turbidimeter_cali_buf[0];
+            q = (uint8_t*)pusRegHoldingBuf;
+            for(i = 0; i < 2*usNRegs; i++)
+            {
+                p[i] = q[i];
+            }
         }
     }
     else
@@ -194,7 +226,7 @@ eMBErrorCode eMBMasterRegCoilsCB(UCHAR * pucRegBuffer, USHORT usAddress,
         switch (eMode)
         {
          /* read current coil values from the protocol stack. */
-        case MB_REG_READ:
+        case MB_REG_READ:       /// !!! NO USE
             while (iNReg > 0)
             {
                 *pucRegBuffer++ = xMBUtilGetBits(&pucCoilBuf[iRegIndex++],
