@@ -10,13 +10,9 @@ extern "C" {
 #include <rtthread.h>
 
 
-#define BUTTON_FILTER_TIME 	(RT_TICK_PER_SECOND / 50)
-#define BUTTON_LONG_TIME 	(RT_TICK_PER_SECOND)	    /* 持续1秒，认为长按事件 */
+#define BUTTON_FILTER_TIME 	(2)
+#define BUTTON_LONG_TIME 	(100)	    /* 持续1秒，认为长按事件 */
 
-/*
-	每个按键对应1个全局的结构体变量。
-	其成员变量是实现滤波和多种按键状态所必须的
-*/
 typedef struct
 {
 	/* 下面是一个函数指针，指向判断按键手否按下的函数 */
@@ -34,11 +30,6 @@ typedef struct
     uint8_t keyCodeCombPrime2_1;
 }BUTTON_T;
 
-/* 定义键值代码
-	推荐使用enum, 不用#define，原因：
-	(1) 便于新增键值,方便调整顺序，使代码看起来舒服点
-	(2)	编译器可帮我们避免键值重复。
-*/
 typedef enum
 {
 	KEY_NONE = 0,			/* 0 表示按键事件 */
@@ -58,6 +49,11 @@ typedef enum
     KEY_DOWN_OK,		/* OK键按下 */
 	KEY_UP_OK,
     KEY_LONG_OK,
+    
+    KEY_DOWN_MENU_AND_OK,
+    KEY_UP_MENU_AND_OK,
+    KEY_LONG_MENU_AND_OK,
+    
     /*
     KEY_DOWN_MENU_UP,
     KEY_UP_MENU_UP,

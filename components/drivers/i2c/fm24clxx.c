@@ -57,7 +57,7 @@ static rt_size_t fm24clxx_read(rt_device_t dev, rt_off_t pos, void *buffer, rt_s
     struct fm24clxx_device *fm24clxx;
     const struct fm24clxx_config *cfg;
     struct rt_i2c_msg msg[2];
-    rt_uint8_t mem_addr[2] = {0,};
+    rt_uint8_t mem_addr[1] = {0};
     rt_size_t ret = 0;
     RT_ASSERT(dev != 0);
 
@@ -78,10 +78,9 @@ static rt_size_t fm24clxx_read(rt_device_t dev, rt_off_t pos, void *buffer, rt_s
 
     msg[0].addr     = cfg->addr;
     msg[0].flags    = cfg->flags | RT_I2C_WR;
-    mem_addr[0]     = (pos >> 8);
-    mem_addr[1]     = (rt_uint8_t) pos;
+    mem_addr[0]     = (rt_uint8_t) pos;
     msg[0].buf      = (rt_uint8_t *) mem_addr;
-    msg[0].len      =  2;
+    msg[0].len      =  1;
 
     msg[1].addr     = cfg->addr;
     msg[1].flags    = cfg->flags | RT_I2C_RD;
@@ -97,7 +96,7 @@ static rt_size_t fm24clxx_write(rt_device_t dev, rt_off_t pos, const void *buffe
     struct fm24clxx_device *fm24clxx;
     const struct fm24clxx_config *cfg;
     struct rt_i2c_msg msg[2];
-    rt_uint8_t mem_addr[2] = {0,};
+    rt_uint8_t mem_addr[1] = {0};
     rt_size_t ret = 0;
     RT_ASSERT(dev != 0);
 
@@ -118,10 +117,9 @@ static rt_size_t fm24clxx_write(rt_device_t dev, rt_off_t pos, const void *buffe
 
     msg[0].addr     = cfg->addr;
     msg[0].flags    = cfg->flags | RT_I2C_WR;
-    mem_addr[0]     = (pos >> 8);
-    mem_addr[1]     = (rt_uint8_t) pos;
+    mem_addr[0]     = (rt_uint8_t) pos;
     msg[0].buf      = (rt_uint8_t *) mem_addr;
-    msg[0].len      =  2;
+    msg[0].len      =  1;
 
     msg[1].addr     = cfg->addr;
     msg[1].flags    = cfg->flags | RT_I2C_WR | RT_I2C_NO_START;

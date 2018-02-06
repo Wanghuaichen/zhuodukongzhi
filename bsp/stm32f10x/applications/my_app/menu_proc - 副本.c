@@ -47,13 +47,10 @@ static void get_utf8_len(char *pStr,uint16_t *pTotalLen,uint16_t *pAsciiLen);
                                                  (((uint32_t)(A) & 0x0000ff00) << 8) | \
                                                  (((uint32_t)(A) & 0x000000ff) << 24))
 
-#define SWAP_32(A)  ((((uint32_t)(A) & 0xffff0000) >> 16) | \
-                                                 (((uint32_t)(A) & 0x0000ffff) << 16))
-
 float swap_f32(float dat)
 {
     uint32_t dat_32 = *(uint32_t*)&dat;
-    dat_32 = SWAP_32(dat_32);
+    dat_32 = SWAP32(dat_32);
     return *(float*) &dat_32;
 }
 
@@ -78,8 +75,7 @@ void menu_range_4(uint8_t msg);
 void menu_linear_cali_point(uint8_t msg);
 void menu_linear_cali(uint8_t msg);
 void menu_linear_coeff_setup(uint8_t msg);
-void menu_4mA_cali(uint8_t msg);    
-void menu_20mA_cali(uint8_t msg);    
+void menu_4_20_cali(uint8_t msg);    
     
 void menu_reset_factory(uint8_t msg);
 
@@ -93,7 +89,7 @@ const static MenuTreeDef s_Menu[MENU_MAX] =
 	{"0.0",{"Range Setup" , "量程设置" },menu_default},
     {"0.1",{"Linear Cali Setup" , "线性校准" },menu_default},
     {"0.2",{"Linear Coeff Setup" , "线性系数设置" },menu_linear_coeff_setup},
-    {"0.3",{"4-20 mA Setup" , "4-20mA校准" },menu_default},
+    {"0.3",{"4-20 mA Setup" , "4-20mA校准" },menu_4_20_cali},
     {"0.4",{"485 Setup" , "485设置" },menu_default},
     
     {"0.0.0",{"Range Setup" , "量程选择" },menu_range_sel},
@@ -104,9 +100,6 @@ const static MenuTreeDef s_Menu[MENU_MAX] =
     
     {"0.1.0",{" " , "校准点数设置" },menu_linear_cali_point},
     {"0.1.1",{" " , "浊度校准" },menu_linear_cali},
-    
-    {"0.3.0",{" " , "4mA校准" },menu_4mA_cali},
-    {"0.3.1",{" " , "20mA校准" },menu_20mA_cali},
     
     {"0.4.0",{"Modbus Addr" , "本机地址设置" },menu_rs485_id},
     {"0.4.1",{"Modbus baud" , "波特率设置" },menu_rs485_baud},
@@ -150,7 +143,7 @@ static void screen_zhuodu_display(uint8_t* pscreen_index,uint8_t msg);
         
 void menu_main_disp(uint8_t msg)
 {
-    static uint8_t screen_index = 2;
+    static uint8_t screen_index = 1;
     
     switch(screen_index)
     {
@@ -171,77 +164,11 @@ SET_STAT set_mainscreen_val(uint8_t msg,SetIntFloatDef setIntFloat);
 static void screen_ch1_set(uint8_t* pscreen_index,uint8_t msg)
 {
     /* stat : 0 - screen select 1 - value select 2 - value modifing 3 - save or not & return to 0 */
-    static uint8_t stat = 0,timer,set_stat,flag,curr_select,set_flag;
-    static Label_t label[4]; 
-    static NumberBox_t number_box[4];
+    static uint8_t stat = 0,curr_select ,cur,timer,is_float = 0,set_stat = SET_OK;
     SetIntFloatDef SetVal;
     double dat;
     const char* yesno = {"<-是        否->"};
-    uint16_t i;
-    union data_f
-    {
-        float dat;
-        uint16_t buf[2];
-    } data;
     
-    if(flag == 0)
-    {
-        flag = 1;  set_flag = 0;
-
-//        global.zhuodu_data.canbi_set = 100;
-//        global.zhuodu_data.range_sel = 0;
-//        global.zhuodu_data.seg_range_1 = 50;
-//        global.zhuodu_data.a1k1 = 1.0f;
-        
-		label[0].x = 0; label[0].y = 0; label[0].is_focused = 0;label[0].label_stat = 0;label[0].width = 14;label[0].is_show = 1;
-		snprintf(label[0].label_buf,label[0].width,"%s","CH1目标  ");
-		label[1].x = 0; label[1].y = 16; label[1].is_focused = 0;label[1].label_stat = 0;label[1].width = 14;label[1].is_show = 1;
-		snprintf(label[1].label_buf,label[1].width,"%s","波动范围 ");
-		label[2].x = 0; label[2].y = 32; label[2].is_focused = 0;label[2].label_stat = 0;label[2].width = 14;label[2].is_show = 1;
-		snprintf(label[2].label_buf,label[2].width,"%s","参比系数 ");
-		label[3].x = 0; label[3].y = 48; label[3].is_focused = 0;label[3].label_stat = 0;label[3].width = 14;label[3].is_show = 1;
-		snprintf(label[3].label_buf,label[3].width,"%s","参比计算 ");
-		
-		label_show(&label[0]); label_show(&label[1]); label_show(&label[2]); label_show(&label[3]);
-		
-        number_box[0].x = 9*8; number_box[0].y = 0 ; number_box[0].is_focused = 0; number_box[0].box_stat = 0; number_box[0].box_width = 5; number_box[0].data_width = 5; 
-        number_box[0].set_index = 0; number_box[0].data_type = INTEGER; number_box[0].min = 0; number_box[0].max = 30001;number_box[0].set_integer = global.zhuodu_data.canbi_set;
-        number_box[0].is_show = 1;
-        
-        number_box[1].x = 9*8; number_box[1].y = 16 ; number_box[1].is_focused = 0; number_box[1].box_stat = 0; number_box[1].box_width = 5; number_box[1].data_width = 5; 
-        number_box[1].set_index = 0; number_box[1].data_type = INTEGER; number_box[1].min = 0; number_box[1].max = 30001; 
-        number_box[1].is_show = 1;
-        switch(global.zhuodu_data.range_sel)
-        {
-            case 0:
-                number_box[1].set_integer = global.zhuodu_data.seg_range_1;
-                break;
-            case 1:
-                number_box[1].set_integer = global.zhuodu_data.seg_range_2;
-                break;
-            case 2:
-                number_box[1].set_integer = global.zhuodu_data.seg_range_3;
-                break;
-            case 3:
-                number_box[1].set_integer = global.zhuodu_data.seg_range_4;
-                break;
-            default:
-                break;
-        }
-        number_box[2].x = 9*8; number_box[2].y = 32 ; number_box[2].is_focused = 0; number_box[2].box_stat = 0; number_box[2].box_width = 5; number_box[2].data_width = 5; 
-        number_box[2].set_index = 0; number_box[2].data_type = FLOAT; number_box[2].min = 0.001; number_box[2].max = 10;
-        number_box[2].set_float = global.zhuodu_data.a1k1; number_box[2].is_show = 1;
-        
-        number_box[3].x = 9*8; number_box[3].y = 48 ; number_box[3].is_focused = 0; number_box[3].box_stat = 0; number_box[3].box_width = 5; number_box[3].data_width = 5; 
-        number_box[3].set_index = 0; number_box[3].data_type = FLOAT; number_box[3].min = 0.00; number_box[3].max = 10; number_box[3].is_readonly = 1;
-        number_box[3].set_float = global.zhuodu_data.canbi_calc_get; number_box[3].is_show = 1;
-        
-        LCD_DisplayString(14*8,0, "  ",NOT_REVERSE);
-        LCD_DisplayString(14*8,16,"  ",NOT_REVERSE);
-        LCD_DisplayString(14*8,32,"  ",NOT_REVERSE);
-        LCD_DisplayString(14*8,48,"  ",NOT_REVERSE);
-    }
-	
     switch(stat)
     {
         case 0:
@@ -249,33 +176,25 @@ static void screen_ch1_set(uint8_t* pscreen_index,uint8_t msg)
             {
             case KEY_DOWN_MENU:
                     if(*pscreen_index > 0)
-                    {
-                        flag = 0;
                         (*pscreen_index)--;
-                    }
                     break;
             case KEY_DOWN_OK:
                     if(*pscreen_index < 2)
-                    {
-                        flag = 0;
                         (*pscreen_index)++;
-                    }
                     break;
             case KEY_DOWN_DOWN:
                 stat = 1;
-                if(number_box[curr_select].box_stat == UNFOCUSED)
-                {
-                    number_box[curr_select].box_stat = FOCUSED;
-                    msg = KEY_NONE;
-                }
+                if(curr_select < 3)
+                    curr_select++;
+                else if(curr_select == 3)
+                    curr_select = 0;
                 break;
             case KEY_DOWN_UP:
                 stat = 1;
-                if(number_box[curr_select].box_stat == UNFOCUSED)
-                {
-                    number_box[curr_select].box_stat = FOCUSED;
-                    msg = KEY_NONE;
-                }                         
+                if(curr_select > 0)
+                    curr_select--;
+                else if(curr_select == 0)
+                    curr_select = 3;
                 break;
             break;
             case KEY_DOWN_MENU_AND_OK:            
@@ -288,28 +207,30 @@ static void screen_ch1_set(uint8_t* pscreen_index,uint8_t msg)
             {
             case KEY_DOWN_MENU:
                     stat = 0;
+                    curr_select = 0;
                     break;
             case KEY_DOWN_OK:
                     stat = 2;
-                    set_stat = set_number_box(msg,&number_box[i]);
                     break;
             case KEY_DOWN_DOWN:
-                number_box[curr_select].box_stat = UNFOCUSED;  
                 if(curr_select < 3)
                     curr_select++;
                 else if(curr_select == 3)
                     curr_select = 0;
-                number_box[curr_select].box_stat = FOCUSED;
-                msg = KEY_NONE;
+                if(curr_select == 2)
+                    is_float = 1;
+                else
+                    is_float = 0;
                 break;
             case KEY_DOWN_UP:
-                number_box[curr_select].box_stat = UNFOCUSED;
-                    if(curr_select > 0)
-                        curr_select--;
-                    else if(curr_select == 0)
-                        curr_select = 3;
-                    number_box[curr_select].box_stat = FOCUSED;   
-                    msg = KEY_NONE;                    
+                if(curr_select > 0)
+                    curr_select--;
+                else if(curr_select == 0)
+                    curr_select = 3;
+                if(curr_select == 2)
+                    is_float = 1;
+                else
+                    is_float = 0;
                 break;
             break;
             case KEY_DOWN_MENU_AND_OK:            
@@ -318,38 +239,160 @@ static void screen_ch1_set(uint8_t* pscreen_index,uint8_t msg)
             }
             break;
         case 2:
-            //set_stat = set_number_box(msg,&number_box[i]);
-            break;
-        default: break;
-    }
-	for(i = 0 ; i < 3; i++)
-	{
-        set_stat = set_number_box(msg,&number_box[i]);
-        if( set_stat == SAVING)
-        {
-            set_flag = 1;
-        }
-        if(set_stat == FOCUSED && set_flag == 1)
-        {
-            stat = 1;
-            set_flag = 0;
-            switch(i)
+            switch(curr_select)
             {
                 case 0:
-                     eMBMasterReqWriteHoldingRegister(1,0x100,number_box[i].set_integer,RT_TICK_PER_SECOND / 2); 
+                    SetVal.dataType = INT_16_T;
+                    SetVal.width = 5;
+                    SetVal.max = 32000;
+                    SetVal.min = 0;
+                    SetVal.setData = global.zhuodu_data.canbi_set;
+                    SetVal.pRetVal = &dat;
+                
+                    set_stat = set_mainscreen_val(msg,SetVal);
+                    if(set_stat == SET_ING)
+                    {
+                        break;
+                    }
+                    else if(set_stat == SET_MAX_MIN_ERROR)
+                    {
+                        stat = 1;
+                        break;
+                    }
+                    else if(set_stat == SET_OK)
+                    {
+                        global.zhuodu_data.canbi_set = dat;
+                        stat = 1;
+                    }                        
                     break;
                 case 1:
-                    eMBMasterReqWriteHoldingRegister(1,0x101,number_box[i].set_integer,RT_TICK_PER_SECOND / 2);
+                    
                     break;
                 case 2:
-                    data.dat = swap_f32(number_box[i].set_float);
-                    eMBMasterReqWriteMultipleHoldingRegister(1,0x100+23,2,data.buf,RT_TICK_PER_SECOND / 2);
-                    break;                
+                    break;                            
                 default:
                     break;
             }
-        }
-	}
+            
+            break;
+        case 3:
+            switch(msg)
+            {
+                case KEY_DOWN_MENU:
+                    //TODO save modified value & return
+                    stat = 1;
+                    cur = 0;
+                    break;
+                case KEY_DOWN_OK:
+                    //DO NOT save modified value & return
+                    stat = 1;
+                    cur = 0;
+                    break;
+                case KEY_DOWN_MENU_AND_OK:
+                    //DO NOT save modified value & return
+                    stat = 0;
+                    curr_select = 0;
+                    cur = 0;
+                    menu_default(NULL);
+                    break;
+                default:
+                    break;
+            }
+            break;
+        default: break;
+    }
+    // display
+    switch(stat)
+    {
+        case 0:
+            snprintf(&s_tmp_buf[0][0],25,"CH1目标 %5d",global.zhuodu_data.canbi_set);
+            LCD_DisplayString(0,0,&s_tmp_buf[0][0],NOT_REVERSE);
+            snprintf(&s_tmp_buf[1][0],25,"波动范围 %5d",global.zhuodu_data.bright_range);
+            LCD_DisplayString(0,16,&s_tmp_buf[1][0],NOT_REVERSE);
+            snprintf(&s_tmp_buf[2][0],25,"参比系数 %4.2f",global.zhuodu_data.a1k1);
+            LCD_DisplayString(0,32,&s_tmp_buf[2][0],NOT_REVERSE);
+            snprintf(&s_tmp_buf[3][0],25,"参比计算 %5f",global.zhuodu_data.canbi_calc_get);
+            LCD_DisplayString(0,48,&s_tmp_buf[3][0],NOT_REVERSE);
+            break;
+        case 1:
+            snprintf(&s_tmp_buf[0][0],25,"CH1目标 %5d",global.zhuodu_data.canbi_set);
+            snprintf(&s_tmp_buf[1][0],25,"波动范围 %5d",global.zhuodu_data.bright_range);
+            snprintf(&s_tmp_buf[2][0],25,"参比系数 %4.2f",global.zhuodu_data.a1k1);
+            snprintf(&s_tmp_buf[3][0],25,"参比计算 %5f",global.zhuodu_data.canbi_calc_get);
+            switch(curr_select)
+            {
+                case 0:
+                    LCD_DisplayString(0,0,&s_tmp_buf[0][0],REVERSE);
+                    LCD_DisplayString(0,16,&s_tmp_buf[1][0],NOT_REVERSE);
+                    LCD_DisplayString(0,32,&s_tmp_buf[2][0],NOT_REVERSE);
+                    LCD_DisplayString(0,48,&s_tmp_buf[3][0],NOT_REVERSE);
+                    break;
+                case 1:
+                    LCD_DisplayString(0,0,&s_tmp_buf[0][0],NOT_REVERSE);
+                    LCD_DisplayString(0,16,&s_tmp_buf[1][0],REVERSE);
+                    LCD_DisplayString(0,32,&s_tmp_buf[2][0],NOT_REVERSE);
+                    LCD_DisplayString(0,48,&s_tmp_buf[3][0],NOT_REVERSE);
+                    break;
+                case 2:
+                    LCD_DisplayString(0,0,&s_tmp_buf[0][0],NOT_REVERSE);
+                    LCD_DisplayString(0,16,&s_tmp_buf[1][0],NOT_REVERSE);
+                    LCD_DisplayString(0,32,&s_tmp_buf[2][0],REVERSE);
+                    LCD_DisplayString(0,48,&s_tmp_buf[3][0],NOT_REVERSE);
+                    break;
+                case 3:
+                    LCD_DisplayString(0,0,&s_tmp_buf[0][0],NOT_REVERSE);
+                    LCD_DisplayString(0,16,&s_tmp_buf[1][0],NOT_REVERSE);
+                    LCD_DisplayString(0,32,&s_tmp_buf[2][0],NOT_REVERSE);
+                    LCD_DisplayString(0,48,&s_tmp_buf[3][0],REVERSE);
+                    break;
+                default:
+                    break;
+            }
+            break;
+        case 2:
+//            snprintf(&s_tmp_buf[0][0],25,"CH1目标 %5d",global.zhuodu_data.canbi_set);
+//            snprintf(&s_tmp_buf[1][0],25,"波动范围 %5d",global.zhuodu_data.bright_range);
+//            snprintf(&s_tmp_buf[2][0],25,"参比系数 %4.2f",global.zhuodu_data.a1k1);
+//            snprintf(&s_tmp_buf[3][0],25,"参比计算 %5f",global.zhuodu_data.canbi_calc_get);
+            switch(curr_select)
+            {
+                case 0:
+                    switch(set_stat)
+                    {
+                        case SET_ING:
+                            disp_main_screen(56,0,s_set_buf,5,s_cur);
+                            LCD_DisplayString(0,16,&s_tmp_buf[1][0],NOT_REVERSE);
+                            LCD_DisplayString(0,32,&s_tmp_buf[2][0],NOT_REVERSE);
+                            LCD_DisplayString(0,48,&s_tmp_buf[3][0],NOT_REVERSE);
+                            break;
+                        case SET_SAVE:
+                            disp_main_screen(56,0,s_set_buf,5,s_cur);
+                            LCD_DisplayString(0,16,&s_tmp_buf[1][0],NOT_REVERSE);
+                            LCD_DisplayString(0,32,(char*)yesno,NOT_REVERSE);
+                            LCD_DisplayString(0,48,&s_tmp_buf[3][0],NOT_REVERSE);
+                            break;
+                        case SET_OK:
+                            LCD_DisplayString(0,32,&s_tmp_buf[2][0],NOT_REVERSE);
+                            break;
+                        case SET_EXIT:
+                            LCD_DisplayString(0,32,&s_tmp_buf[2][0],NOT_REVERSE);
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                default:
+                    break;
+            }
+            break;
+    }
+    
 }
 
 static void screen_ch123_display(uint8_t* pscreen_index,uint8_t msg)
@@ -409,7 +452,7 @@ static void screen_zhuodu_display(uint8_t* pscreen_index,uint8_t msg)
             break;
     }
     snprintf(&s_tmp_buf[0][0],25,"   吸光度%5.3f%s",global.zhuodu_data.absorbance,s_blank);
-    snprintf(&s_tmp_buf[1][0],25,"   浊 度 %5.3f%s",global.zhuodu_data.turbidimeter,s_blank);
+    snprintf(&s_tmp_buf[1][0],25,"     浊度%5.3f%s",global.zhuodu_data.turbidimeter,s_blank);
     
     LCD_DisplayString(0,0,s_blank,NOT_REVERSE);
     LCD_DisplayString(0,16,&s_tmp_buf[0][0],NOT_REVERSE);
@@ -611,406 +654,13 @@ void menu_linear_cali_point(uint8_t msg)
 
 void menu_linear_cali(uint8_t msg)
 {
-    /* stat : 0 - screen select 1 - value select 2 - value modifing 3 - save or not & return to 0 */
-    static uint8_t stat = 0,timer,set_stat,flag,curr_select,set_flag;
-    static Label_t label[8]; 
-    static NumberBox_t number_box[8];
-    SetIntFloatDef SetVal;
-    double dat;
-    const char* yesno = {"<-是        否->"};
-    uint16_t i;
-    union data_f
-    {
-        float dat;
-        uint16_t buf[2];
-    } data;
     
-    if(flag == 0)
-    {
-        flag = 1; set_flag = 0;
-
-        ClearLCD();
-		label[0].x = 0; label[0].y = 0; label[0].is_focused = 0;label[0].label_stat = 0;label[0].width = 5;label[0].is_show = 1;
-		snprintf(label[0].label_buf,label[0].width,"%s","1浊");
-		label[1].x = 0; label[1].y = 16; label[1].is_focused = 0;label[1].label_stat = 0;label[1].width = 5;label[1].is_show = 1;
-		snprintf(label[1].label_buf,label[1].width,"%s","2浊");
-		label[2].x = 0; label[2].y = 32; label[2].is_focused = 0;label[2].label_stat = 0;label[2].width = 5;label[2].is_show = 1;
-		snprintf(label[2].label_buf,label[2].width,"%s","3浊");
-		label[3].x = 0; label[3].y = 48; label[3].is_focused = 0;label[3].label_stat = 0;label[3].width = 5;label[3].is_show = 1;
-		snprintf(label[3].label_buf,label[3].width,"%s","4浊");
-		label[4].x = 64; label[4].y = 0; label[4].is_focused = 0;label[4].label_stat = 0;label[4].width = 5;label[4].is_show = 1;
-		snprintf(label[4].label_buf,label[4].width,"%s","1吸");
-		label[5].x = 64; label[5].y = 16; label[5].is_focused = 0;label[5].label_stat = 0;label[5].width = 5;label[5].is_show = 1;
-		snprintf(label[5].label_buf,label[5].width,"%s","2吸");
-		label[6].x = 64; label[6].y = 32; label[6].is_focused = 0;label[6].label_stat = 0;label[6].width = 5;label[6].is_show = 1;
-		snprintf(label[6].label_buf,label[6].width,"%s","3吸");
-		label[7].x = 64; label[7].y = 48; label[7].is_focused = 0;label[7].label_stat = 0;label[7].width = 5;label[7].is_show = 1;
-		snprintf(label[7].label_buf,label[7].width,"%s","4吸");
-		
-		label_show(&label[0]); label_show(&label[1]); label_show(&label[2]); label_show(&label[3]);
-		label_show(&label[4]); label_show(&label[5]); label_show(&label[6]); label_show(&label[7]);
-		
-        number_box[0].x = 3*8; number_box[0].y = 0 ; number_box[0].is_focused = 0; number_box[0].box_stat = 0; number_box[0].box_width = 4; number_box[0].data_width = 4; 
-        number_box[0].set_index = 0; number_box[0].data_type = FLOAT; number_box[0].min = 0; number_box[0].max = 30001;number_box[0].set_float = global.zhuodu_data.turbidimeter_cali_buf[0];
-        number_box[0].is_show = 1;
-        
-        number_box[1].x = 3*8; number_box[1].y = 16 ; number_box[1].is_focused = 0; number_box[1].box_stat = 0; number_box[1].box_width = 4; number_box[1].data_width = 4; 
-        number_box[1].set_index = 0; number_box[1].data_type = FLOAT; number_box[1].min = 0; number_box[1].max = 30001;number_box[1].set_float = global.zhuodu_data.turbidimeter_cali_buf[1];
-        number_box[1].is_show = 1;
-		
-		number_box[2].x = 3*8; number_box[2].y = 32 ; number_box[2].is_focused = 0; number_box[2].box_stat = 0; number_box[2].box_width = 4; number_box[2].data_width = 4; 
-        number_box[2].set_index = 0; number_box[2].data_type = FLOAT; number_box[2].min = 0; number_box[2].max = 30001;number_box[2].set_float = global.zhuodu_data.turbidimeter_cali_buf[2];
-        number_box[2].is_show = 1;
-        
-        number_box[3].x = 3*8; number_box[3].y = 48 ; number_box[3].is_focused = 0; number_box[3].box_stat = 0; number_box[3].box_width = 4; number_box[3].data_width = 4; 
-        number_box[3].set_index = 0; number_box[3].data_type = FLOAT; number_box[3].min = 0; number_box[3].max = 30001;number_box[3].set_float = global.zhuodu_data.turbidimeter_cali_buf[3];
-        number_box[3].is_show = 1;
-		
-		number_box[4].x = 11*8; number_box[4].y = 0 ; number_box[4].is_focused = 0; number_box[4].box_stat = 0; number_box[4].box_width = 5; number_box[4].data_width = 5; 
-        number_box[4].set_index = 0; number_box[4].data_type = FLOAT; number_box[4].min = 0; number_box[4].max = 30001;number_box[4].set_float = global.zhuodu_data.absorbance_cali_buf[0];
-        number_box[4].is_show = 1;
-		
-		number_box[5].x = 11*8; number_box[5].y = 16 ; number_box[5].is_focused = 0; number_box[5].box_stat = 0; number_box[5].box_width = 5; number_box[5].data_width = 5; 
-        number_box[5].set_index = 0; number_box[5].data_type = FLOAT; number_box[5].min = 0; number_box[5].max = 30001;number_box[5].set_float = global.zhuodu_data.absorbance_cali_buf[1];
-        number_box[5].is_show = 1;
-		
-		number_box[6].x = 11*8; number_box[6].y = 32 ; number_box[6].is_focused = 0; number_box[6].box_stat = 0; number_box[6].box_width = 5; number_box[6].data_width = 5; 
-        number_box[6].set_index = 0; number_box[6].data_type = FLOAT; number_box[6].min = 0; number_box[6].max = 30001;number_box[6].set_float = global.zhuodu_data.absorbance_cali_buf[2];
-        number_box[6].is_show = 1;
-		
-		number_box[7].x = 11*8; number_box[7].y = 48 ; number_box[7].is_focused = 0; number_box[7].box_stat = 0; number_box[7].box_width = 5; number_box[7].data_width = 5; 
-        number_box[7].set_index = 0; number_box[7].data_type = FLOAT; number_box[7].min = 0; number_box[7].max = 30001;number_box[7].set_float = global.zhuodu_data.absorbance_cali_buf[3];
-        number_box[7].is_show = 1;
-
-    }
-	
-    switch(stat)
-    {
-        case 0:
-            switch(msg)
-            {
-            case KEY_DOWN_MENU:
-                    flag = 0;
-                    leaf_exit(NULL);
-                    break;
-            case KEY_DOWN_OK:
-                    break;
-            case KEY_DOWN_DOWN:
-                stat = 1;
-                if(number_box[curr_select].box_stat == UNFOCUSED)
-                {
-                    number_box[curr_select].box_stat = FOCUSED;
-                    msg = KEY_NONE;
-                }
-                break;
-            case KEY_DOWN_UP:
-                stat = 1;
-                if(number_box[curr_select].box_stat == UNFOCUSED)
-                {
-                    number_box[curr_select].box_stat = FOCUSED;
-                    msg = KEY_NONE;
-                }                         
-                break;
-            break;
-            default:break;
-            }
-            break;
-        case 1:
-            switch(msg)
-            {
-            case KEY_DOWN_MENU:
-                    stat = 0;
-                    break;
-            case KEY_DOWN_OK:
-                    stat = 2;
-                    set_stat = set_number_box(msg,&number_box[i]);
-                    break;
-            case KEY_DOWN_DOWN:
-                number_box[curr_select].box_stat = UNFOCUSED;  
-                if(curr_select < 8)
-                    curr_select++;
-                else if(curr_select == 8)
-                    curr_select = 0;
-                number_box[curr_select].box_stat = FOCUSED;
-                msg = KEY_NONE;
-                break;
-            case KEY_DOWN_UP:
-                number_box[curr_select].box_stat = UNFOCUSED;
-                    if(curr_select > 0)
-                        curr_select--;
-                    else if(curr_select == 0)
-                        curr_select = 8;
-                    number_box[curr_select].box_stat = FOCUSED;   
-                    msg = KEY_NONE;                    
-                break;
-            break;
-            default:break;
-            }
-            break;
-        case 2:
-            //set_stat = set_number_box(msg,&number_box[i]);
-            break;
-        default: break;
-    }
-	for(i = 0 ; i < 8; i++)
-	{
-        set_stat = set_number_box(msg,&number_box[i]);
-        if( set_stat == SAVING)
-        {
-            set_flag = 1;
-        }
-        if(set_stat == FOCUSED && set_flag == 1)
-        {
-            stat = 1;
-            set_flag = 0;
-            
-            data.dat = swap_f32(number_box[i].set_float);
-            eMBMasterReqWriteMultipleHoldingRegister(1,0x200+i*2,2,data.buf,RT_TICK_PER_SECOND / 2);
-        }
-	}
 }
 void menu_linear_coeff_setup(uint8_t msg)
 {
-	/* stat : 0 - screen select 1 - value select 2 - value modifing 3 - save or not & return to 0 */
-    static uint8_t stat = 0,timer,set_stat,flag,curr_select,set_flag;
-    static Label_t label[8]; 
-    static NumberBox_t number_box[8];
-    SetIntFloatDef SetVal;
-    double dat;
-    const char* yesno = {"<-是        否->"};
-    uint16_t i;
-    union data_f
-    {
-        float dat;
-        uint16_t buf[2];
-    } data;
-    
-    if(flag == 0)
-    {
-        flag = 1; set_flag = 0;
-        ClearLCD();
-		label[0].x = 0; label[0].y = 0; label[0].is_focused = 0;label[0].label_stat = 0;label[0].width = 4;label[0].is_show = 1;
-		snprintf(label[0].label_buf,label[0].width,"%s","A1 ");
-		label[1].x = 0; label[1].y = 16; label[1].is_focused = 0;label[1].label_stat = 0;label[1].width = 4;label[1].is_show = 1;
-		snprintf(label[1].label_buf,label[1].width,"%s","A2 ");
-		label[2].x = 0; label[2].y = 32; label[2].is_focused = 0;label[2].label_stat = 0;label[2].width = 4;label[2].is_show = 1;
-		snprintf(label[2].label_buf,label[2].width,"%s","A3 ");
-		label[3].x = 0; label[3].y = 48; label[3].is_focused = 0;label[3].label_stat = 0;label[3].width = 4;label[3].is_show = 1;
-		snprintf(label[3].label_buf,label[3].width,"%s","A4 ");
-		label[4].x = 64; label[4].y = 0; label[4].is_focused = 0;label[4].label_stat = 0;label[4].width = 4;label[4].is_show = 1;
-		snprintf(label[4].label_buf,label[4].width,"%s","B1 ");
-		label[5].x = 64; label[5].y = 16; label[5].is_focused = 0;label[5].label_stat = 0;label[5].width = 4;label[5].is_show = 1;
-		snprintf(label[5].label_buf,label[5].width,"%s","B2 ");
-		label[6].x = 8*8; label[6].y = 32; label[6].is_focused = 0;label[6].label_stat = 0;label[6].width = 4;label[6].is_show = 1;
-		snprintf(label[6].label_buf,label[6].width,"%s","B3 ");
-		label[7].x = 8*8; label[7].y = 48; label[7].is_focused = 0;label[7].label_stat = 0;label[7].width = 4;label[7].is_show = 1;
-		snprintf(label[7].label_buf,label[7].width,"%s","B4 ");
-		
-		label_show(&label[0]); label_show(&label[1]); label_show(&label[2]); label_show(&label[3]);
-		label_show(&label[4]); label_show(&label[5]); label_show(&label[6]); label_show(&label[7]);
-		
-        number_box[0].x = 3*8; number_box[0].y = 0 ; number_box[0].is_focused = 0; number_box[0].box_stat = 0; number_box[0].box_width = 5; number_box[0].data_width = 5; 
-        number_box[0].set_index = 0; number_box[0].data_type = FLOAT; number_box[0].min = 0; number_box[0].max = 30001;number_box[0].set_float = global.zhuodu_data.a1;
-        number_box[0].is_show = 1;
-        
-        number_box[1].x = 3*8; number_box[1].y = 16 ; number_box[1].is_focused = 0; number_box[1].box_stat = 0; number_box[1].box_width = 5; number_box[1].data_width = 5; 
-        number_box[1].set_index = 0; number_box[1].data_type = FLOAT; number_box[1].min = 0; number_box[1].max = 30001;number_box[1].set_float = global.zhuodu_data.a2;
-        number_box[1].is_show = 1;
-		
-		number_box[2].x = 3*8; number_box[2].y = 32 ; number_box[2].is_focused = 0; number_box[2].box_stat = 0; number_box[2].box_width = 5; number_box[2].data_width = 5; 
-        number_box[2].set_index = 0; number_box[2].data_type = FLOAT; number_box[2].min = 0; number_box[2].max = 30001;number_box[2].set_float = global.zhuodu_data.a3;
-        number_box[2].is_show = 1;
-        
-        number_box[3].x = 3*8; number_box[3].y = 48 ; number_box[3].is_focused = 0; number_box[3].box_stat = 0; number_box[3].box_width = 5; number_box[3].data_width = 5; 
-        number_box[3].set_index = 0; number_box[3].data_type = FLOAT; number_box[3].min = 0; number_box[3].max = 30001;number_box[3].set_float = global.zhuodu_data.a4;
-        number_box[3].is_show = 1;
-		
-		number_box[4].x = 11*8; number_box[4].y = 0 ; number_box[4].is_focused = 0; number_box[4].box_stat = 0; number_box[4].box_width = 5; number_box[4].data_width = 5; 
-        number_box[4].set_index = 0; number_box[4].data_type = FLOAT; number_box[4].min = 0; number_box[4].max = 30001;number_box[4].set_float = global.zhuodu_data.b1;
-        number_box[4].is_show = 1;
-		
-		number_box[5].x = 11*8; number_box[5].y = 16 ; number_box[5].is_focused = 0; number_box[5].box_stat = 0; number_box[5].box_width = 5; number_box[5].data_width = 5; 
-        number_box[5].set_index = 0; number_box[5].data_type = FLOAT; number_box[5].min = 0; number_box[5].max = 30001;number_box[5].set_float = global.zhuodu_data.b2;
-        number_box[5].is_show = 1;
-		
-		number_box[6].x = 11*8; number_box[6].y = 32 ; number_box[6].is_focused = 0; number_box[6].box_stat = 0; number_box[6].box_width = 5; number_box[6].data_width = 5; 
-        number_box[6].set_index = 0; number_box[6].data_type = FLOAT; number_box[6].min = 0; number_box[6].max = 30001;number_box[6].set_float = global.zhuodu_data.b3;
-        number_box[6].is_show = 1;
-		
-		number_box[7].x = 11*8; number_box[7].y = 48 ; number_box[7].is_focused = 0; number_box[7].box_stat = 0; number_box[7].box_width = 5; number_box[7].data_width = 5; 
-        number_box[7].set_index = 0; number_box[7].data_type = FLOAT; number_box[7].min = 0; number_box[7].max = 30001;number_box[7].set_float = global.zhuodu_data.b4;
-        number_box[7].is_show = 1;
-
-    }
-	
-    switch(stat)
-    {
-        case 0:
-            switch(msg)
-            {
-            case KEY_DOWN_MENU:
-                    flag = 0;
-                    leaf_exit(NULL);
-                    break;
-            case KEY_DOWN_OK:
-                    break;
-            case KEY_DOWN_DOWN:
-                stat = 1;
-                if(number_box[curr_select].box_stat == UNFOCUSED)
-                {
-                    number_box[curr_select].box_stat = FOCUSED;
-                    msg = KEY_NONE;
-                }
-                break;
-            case KEY_DOWN_UP:
-                stat = 1;
-                if(number_box[curr_select].box_stat == UNFOCUSED)
-                {
-                    number_box[curr_select].box_stat = FOCUSED;
-                    msg = KEY_NONE;
-                }                         
-                break;
-            break;
-            default:break;
-            }
-            break;
-        case 1:
-            switch(msg)
-            {
-            case KEY_DOWN_MENU:
-                    stat = 0;
-                    break;
-            case KEY_DOWN_OK:
-                    stat = 2;
-                    set_stat = set_number_box(msg,&number_box[i]);
-                    break;
-            case KEY_DOWN_DOWN:
-                number_box[curr_select].box_stat = UNFOCUSED;  
-                if(curr_select < 8)
-                    curr_select++;
-                else if(curr_select == 8)
-                    curr_select = 0;
-                number_box[curr_select].box_stat = FOCUSED;
-                msg = KEY_NONE;
-                break;
-            case KEY_DOWN_UP:
-                number_box[curr_select].box_stat = UNFOCUSED;
-                    if(curr_select > 0)
-                        curr_select--;
-                    else if(curr_select == 0)
-                        curr_select = 8;
-                    number_box[curr_select].box_stat = FOCUSED;   
-                    msg = KEY_NONE;                    
-                break;
-            break;
-            default:break;
-            }
-            break;
-        case 2:
-            //set_stat = set_number_box(msg,&number_box[i]);
-            break;
-        default: break;
-    }
-	for(i = 0 ; i < 8; i++)
-	{
-        set_stat = set_number_box(msg,&number_box[i]);
-        if( set_stat == SAVING)
-        {
-            set_flag = 1;
-        }
-        if(set_stat == FOCUSED && set_flag == 1)
-        {
-            stat = 1;
-            set_flag = 0;
-            data.dat = swap_f32(number_box[i].set_float);
-            
-            switch(i)
-            {
-                case 0:
-                    eMBMasterReqWriteMultipleHoldingRegister(1,0x100+11,2,data.buf,RT_TICK_PER_SECOND / 2);
-                    break;
-                case 1:
-                    eMBMasterReqWriteMultipleHoldingRegister(1,0x100+15,2,data.buf,RT_TICK_PER_SECOND / 2);
-                    break;
-                case 2:
-                    eMBMasterReqWriteMultipleHoldingRegister(1,0x100+19,2,data.buf,RT_TICK_PER_SECOND / 2);
-                    break;
-                case 3:
-                    eMBMasterReqWriteMultipleHoldingRegister(1,534,2,data.buf,RT_TICK_PER_SECOND / 2);
-                    break;
-                case 4:
-                    eMBMasterReqWriteMultipleHoldingRegister(1,0x100+13,2,data.buf,RT_TICK_PER_SECOND / 2);
-                    break;
-                case 5:
-                    eMBMasterReqWriteMultipleHoldingRegister(1,0x100+17,2,data.buf,RT_TICK_PER_SECOND / 2);
-                    break;
-                case 6:
-                    eMBMasterReqWriteMultipleHoldingRegister(1,0x100+21,2,data.buf,RT_TICK_PER_SECOND / 2);
-                    break;
-                case 7:
-                    eMBMasterReqWriteMultipleHoldingRegister(1,536,2,data.buf,RT_TICK_PER_SECOND / 2);
-                    break;
-                default:
-                    break;
-            }
-            
-        }
-	}
 }
-void menu_4mA_cali(uint8_t msg)
+void menu_4_20_cali(uint8_t msg)
 {
-    uint8_t lang = get_language();
-    SET_STAT setStat;
-    float32_t setData;
-    double retVal;
-    const char* const titleLang[] = { " " , "4mA校准         "};
-    
-    setIntFloat.dataType = INT_16_T;
-    setIntFloat.setData = global.zhuodu_data.ma_cali;
-    setIntFloat.max = 30000;
-    setIntFloat.min = 0;
-    setIntFloat.pRetVal = &retVal;
-        
-    LCD_DisplayString(0,0,(char*)titleLang[lang],NOT_REVERSE);
-    setStat = set_int_float_min_max( msg, setIntFloat);
-    if( setStat == SET_OK)
-    {
-        eMBMasterReqWriteHoldingRegister(1,290,retVal,RT_TICK_PER_SECOND / 2); 
-        global.zhuodu_data.ma_cali = retVal;
-        leaf_exit(NULL);
-    }
-    else if(setStat == SET_EXIT)
-    {
-        leaf_exit(NULL);
-    }
-}
-
-void menu_20mA_cali(uint8_t msg)
-{
-    uint8_t lang = get_language();
-    SET_STAT setStat;
-    float32_t setData;
-    double retVal;
-    const char* const titleLang[] = { " " , "20mA校准         "};
-    
-    setIntFloat.dataType = INT_16_T;
-    setIntFloat.setData = global.zhuodu_data.ma_cali;
-    setIntFloat.max = 30000;
-    setIntFloat.min = 0;
-    setIntFloat.pRetVal = &retVal;
-        
-    LCD_DisplayString(0,0,(char*)titleLang[lang],NOT_REVERSE);
-    setStat = set_int_float_min_max( msg, setIntFloat);
-    if( setStat == SET_OK)
-    {
-        eMBMasterReqWriteHoldingRegister(1,290,retVal,RT_TICK_PER_SECOND / 2); 
-        global.zhuodu_data.ma_cali = retVal;
-        leaf_exit(NULL);
-    }
-    else if(setStat == SET_EXIT)
-    {
-        leaf_exit(NULL);
-    }
 }
 
 SET_STAT set_mainscreen_val(uint8_t msg,SetIntFloatDef setIntFloat)

@@ -42,6 +42,7 @@ static rt_serial_t *serial;
 /* ----------------------- Defines ------------------------------------------*/
 /* serial transmit event */
 #define EVENT_SERIAL_TRANS_START    (1<<0)
+#define MODBUS_MASTER_RT_CONTROL_PIN_INDEX 27
 
 /* ----------------------- static functions ---------------------------------*/
 static void prvvUARTTxReadyISR(void);
