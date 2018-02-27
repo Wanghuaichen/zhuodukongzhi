@@ -46,8 +46,8 @@ void global_init(void)
     
     rt_device_read(mb85_bus, E2P_OFFSET(password), (uint8_t*)&tmp_u32, 4);
     
-    g.password = tmp_u32;
-	snprintf(g.password_buf,7,"%06d",g.password);
+    global.password = tmp_u32;
+	snprintf(global.password_buf,7,"%06d",global.password);
 
    
 }

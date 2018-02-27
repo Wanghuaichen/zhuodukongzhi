@@ -8,6 +8,8 @@
 #include "menu_proc.h"
 #include "conf_store.h"
 #include "12864_ui.h"
+#include "mb.h"
+#include "mb_m.h"
 //#include "bsp_24xx02.h"
 
 typedef enum SET_STAT 
@@ -60,6 +62,8 @@ void menu_rs485_check(uint8_t msg);
 void menu_rs485_id(uint8_t msg);
 void menu_slave_rs485_id(uint8_t msg);
 
+void menu_unit(uint8_t msg);
+
 void menu_range_sel(uint8_t msg);
 void menu_range_1(uint8_t msg);
 void menu_range_2(uint8_t msg);
@@ -71,7 +75,6 @@ void menu_linear_cali(uint8_t msg);
 void menu_linear_coeff_setup(uint8_t msg);
 void menu_4mA_cali(uint8_t msg);    
 void menu_20mA_cali(uint8_t msg);    
-
 
 void menu_relay_1_alarm_sel(uint8_t msg);
 void menu_relay_1_alarm_value(uint8_t msg);
@@ -221,7 +224,7 @@ void menu_main_disp(uint8_t msg)
 {
     static uint8_t screen_index = 2;
     
-    switch(screen_index)
+    /*switch(screen_index)
     {
         case 0:
             screen_ch1_set(&screen_index,msg);
@@ -234,6 +237,7 @@ void menu_main_disp(uint8_t msg)
             break;        
         default: break;
     }
+    */
 }
 
 /*
@@ -464,7 +468,7 @@ void menu_disp_canbi_calc(uint8_t msg)
     LCD_DisplayString(0,0,&s_tmp_buf[0][0],NOT_REVERSE);
     LCD_DisplayString(0,16,s_blank,NOT_REVERSE);
     LCD_DisplayString(0,32,s_blank,NOT_REVERSE);
-    LCD_DisplayString(0,48,&s_tmp_buf[3][0],NOT_REVERSE
+    LCD_DisplayString(0,48,&s_tmp_buf[3][0],NOT_REVERSE);
     
     if(msg == KEY_DOWN_MENU)
     {
@@ -531,7 +535,7 @@ void menu_unit(uint8_t msg)
     };
     LCD_DisplayString(0,0,(char*)title,NOT_REVERSE);
     
-    setStat = set_select( msg, select_arr,sizeof(select_arr[0]),countof(select_arr), global.unit, &retVal);
+    setStat = set_select( msg,(void*)select_arr,sizeof(select_arr[0]),countof(select_arr), global.unit, &retVal);
    
     if( setStat == SET_OK  )
     {
@@ -560,7 +564,7 @@ void menu_relay_1_alarm_sel(uint8_t msg)
     };
     LCD_DisplayString(0,0,(char*)title,NOT_REVERSE);
     
-    setStat = set_select( msg, select_arr,sizeof(select_arr[0]),countof(select_arr), global.relay_1_alarm_method, &retVal);
+    setStat = set_select( msg, (void*)select_arr,sizeof(select_arr[0]),countof(select_arr), global.relay_1_alarm_method, &retVal);
    
     if( setStat == SET_OK  )
     {
@@ -640,7 +644,7 @@ void menu_relay_2_alarm_sel(uint8_t msg)
     };
     LCD_DisplayString(0,0,(char*)title,NOT_REVERSE);
     
-    setStat = set_select( msg, select_arr,sizeof(select_arr[0]),countof(select_arr), global.relay_2_alarm_method, &retVal);
+    setStat = set_select( msg, (void*)select_arr,sizeof(select_arr[0]),countof(select_arr), global.relay_2_alarm_method, &retVal);
    
     if( setStat == SET_OK  )
     {
@@ -719,7 +723,7 @@ void menu_range_sel(uint8_t msg)
     };
     LCD_DisplayString(0,0,(char*)title,NOT_REVERSE);
     
-    setStat = set_select( msg, select_arr,sizeof(select_arr[0]),countof(select_arr), global.zhuodu_data.range_sel, &retVal);
+    setStat = set_select( msg, (void*)select_arr,sizeof(select_arr[0]),countof(select_arr), global.zhuodu_data.range_sel, &retVal);
    
     if( setStat == SET_OK  )
     {
@@ -885,7 +889,7 @@ void menu_linear_cali_point(uint8_t msg)
     if(global.zhuodu_data.num_cali < 2)
         global.zhuodu_data.num_cali = 2;
     
-    setStat = set_select( msg, commFormatStr,sizeof(commFormatStr[0]),3, global.zhuodu_data.num_cali-2, &retVal);
+    setStat = set_select( msg, (void*)commFormatStr,sizeof(commFormatStr[0]),3, global.zhuodu_data.num_cali-2, &retVal);
    
     if( setStat == SET_OK  )
     {
@@ -1472,7 +1476,7 @@ void menu_rs485_protocal(uint8_t msg)
     };
     LCD_DisplayString(0,0,(char*)titleLang[lang],NOT_REVERSE);
     
-    setStat = set_select( msg, commFormatStr,sizeof(commFormatStr[0]),2, global.comm_format, &retVal);
+    setStat = set_select( msg, (void*)commFormatStr,sizeof(commFormatStr[0]),2, global.comm_format, &retVal);
    
     if( setStat == SET_OK  )
     {
@@ -1672,7 +1676,7 @@ void menu_temp_compensate(uint8_t msg)
     if( setStat == SET_OK )
     {
         global.temp_compensate = retVal;
-        rt_device_write(mb85_bus, E2P_OFFSET(temp_compensate), (uint8_t*)&g.temp_compensate, 2);
+        rt_device_write(mb85_bus, E2P_OFFSET(temp_compensate), (uint8_t*)&global.temp_compensate, 2);
         leaf_exit(NULL);
     }
     else if(setStat == SET_MAX_MIN_ERROR)
@@ -1723,7 +1727,7 @@ void menu_serial_no_setup(uint8_t msg)
     const char* const titleLang[] = { "Sensor Code    " , "传感器编码     ","Sensor Code "};
     
     setIntFloat.dataType = INT_32_T;
-    setIntFloat.setData = g.serial_no;
+    setIntFloat.setData = global.serial_no;
     setIntFloat.max = 999999.0f;
     setIntFloat.min = 0.0f;
     setIntFloat.pRetVal = &retVal;
@@ -1732,8 +1736,8 @@ void menu_serial_no_setup(uint8_t msg)
     setStat = set_int_float_min_max( msg, setIntFloat);
     if( setStat == SET_OK )
     {
-        g.serial_no = retVal;
-        rt_device_write(mb85_bus, E2P_OFFSET(serial_no), (uint8_t*)&g.serial_no , 4);
+        global.serial_no = retVal;
+        rt_device_write(mb85_bus, E2P_OFFSET(serial_no), (uint8_t*)&global.serial_no , 4);
         leaf_exit(NULL);
     }
     else if(setStat == SET_EXIT)
@@ -1754,7 +1758,7 @@ void menu_password_setup(uint8_t msg)
     const char* const titleLang[] = { "Password Setup  " , "密码设置        "};
     
     setIntFloat.dataType = INT_32_T;
-    setIntFloat.setData = g.password;
+    setIntFloat.setData = global.password;
     setIntFloat.max = 999999.0f;
     setIntFloat.min = 0.0f;
     setIntFloat.pRetVal = &retVal;
@@ -1763,9 +1767,9 @@ void menu_password_setup(uint8_t msg)
     setStat = set_int_float_min_max( msg, setIntFloat);
     if( setStat == SET_OK )
     {
-        g.password  = retVal;        
-        rt_device_write(mb85_bus, E2P_OFFSET(password), (uint8_t*)&g.password , 4);
-        snprintf(g.password_buf,7,"%06d",g.password);
+        global.password  = retVal;        
+        rt_device_write(mb85_bus, E2P_OFFSET(password), (uint8_t*)&global.password , 4);
+        snprintf(global.password_buf,7,"%06d",global.password);
         leaf_exit(NULL);
     }
     else if(setStat == SET_EXIT)
@@ -2110,7 +2114,7 @@ uint8_t get_password(uint8_t msg,uint8_t* outBuf)
     static uint8_t keyDown;
     static uint8_t cnt;
     uint8_t lang = get_language();
-    const char* const titleLang[LANG_MAX] = {" Input Password " , "   请输入密码   "," Input Password "};
+    const char* const titleLang[LANG_MAX] = {" Input Password " , "   请输入密码   "};
     const char* stars = "******";
 
     LCD_DisplayString(0,0,(char*)titleLang[lang],NOT_REVERSE);
@@ -2196,7 +2200,7 @@ void pass_proc(uint8_t msg)
 	
     if(1 == get_password(msg,passWord))
     {
-		if( 0 == strncmp(passWord,g.password_buf,6) )
+		if( 0 == strncmp(passWord,global.password_buf,6) )
 		{
 			
 			jump2func(NULL);

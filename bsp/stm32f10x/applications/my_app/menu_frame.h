@@ -18,7 +18,7 @@ extern "C" {
 #define LANG_MAX		2	
 #define STAGE_MAX 		5
 #define INDEX_MAX		30
-#define MENU_MAX 		30
+#define MENU_MAX 		70
 #define LINE_MAX		4
 
 #define ROW 	LINE_MAX

@@ -24,6 +24,8 @@ typedef struct
     uint16_t ee_rw_test;
     uint8_t lcd_contrast;
 	uint8_t is_disp_reverse;
+    uint32_t password;
+    
 	//unprotected
     uint8_t unprotected;
     uint8_t language;
@@ -32,7 +34,12 @@ typedef struct
     uint8_t comm_baud;
     uint8_t comm_databit;
     uint8_t comm_parity;
-    uint8_t comm_device_id; 
+    uint8_t comm_device_id;
+    
+    uint8_t unit;
+    int16_t temp_compensate;
+    uint32_t serial_no;
+    
     
 }E2P_TypeDef;
 
