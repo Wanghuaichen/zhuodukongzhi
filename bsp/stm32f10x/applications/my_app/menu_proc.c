@@ -10,15 +10,6 @@
 #include "12864_ui.h"
 //#include "bsp_24xx02.h"
 
-/*
-a(0) b(0.0) d(0.1) c(0.2) e(0.0.0) f(0.0.1) g(0.1.0) h(0.2.0) i(0.2.1)
-			a
-		  / |  \
-		b	d	c
-	  / |	|   |  \
-	e	f	g	h	i
-*/
-
 typedef enum SET_STAT 
 {
     SET_OK = 0,
@@ -80,16 +71,82 @@ void menu_linear_cali(uint8_t msg);
 void menu_linear_coeff_setup(uint8_t msg);
 void menu_4mA_cali(uint8_t msg);    
 void menu_20mA_cali(uint8_t msg);    
-    
-void menu_reset_factory(uint8_t msg);
 
+
+void menu_relay_1_alarm_sel(uint8_t msg);
+void menu_relay_1_alarm_value(uint8_t msg);
+void menu_relay_1_alarm_delay(uint8_t msg);
+
+void menu_relay_2_alarm_sel(uint8_t msg);
+void menu_relay_2_alarm_value(uint8_t msg);
+void menu_relay_2_alarm_delay(uint8_t msg);
+
+void menu_temp_compensate(uint8_t msg);
+void menu_reset_factory(uint8_t msg);
+void menu_serial_no_setup(uint8_t msg);
+void menu_password_setup(uint8_t msg);
+
+void menu_disp_canbi_org_signal(uint8_t msg);
+void menu_canbi_ratio_setup(uint8_t msg);
+void menu_disp_canbi_calc(uint8_t msg);
+void menu_disp_canbi_object(uint8_t msg);
+void menu_disp_zhishe(uint8_t msg);
+void menu_disp_zheshe(uint8_t msg);
 
 const static MenuTreeDef s_Menu[MENU_MAX] =
 {
-	/* note:the class and index must be continous */
-// a(0) b(0.0) d(0.1) c(0.2) e(0.0.0) f(0.0.1) g(0.1.0) h(0.2.0) i(0.2.1)
 	{"0",{"root","root"}, menu_main_disp},
 	
+    {"0.0",{"R" , "校准" },menu_default},
+    {"0.1",{"R" , "报警" },menu_default},
+    {"0.2",{"R" , "清洗" },menu_default},
+    {"0.3",{"R" , "电流" },menu_default},
+    {"0.4",{"R" , "系统" },menu_default},
+    {"0.5",{"R" , "通讯" },menu_default},
+    {"0.6",{"R" , "历史记录" },menu_default},
+    {"0.7",{"R" , "测试维护" },menu_default},
+    {"0.8",{"R" , "恢复出厂设置" },menu_reset_factory},
+    
+    {"0.0.0",{"R" , "单位设置" },menu_unit},
+    {"0.0.1",{"R" , "量程设置" },menu_range_sel},
+    {"0.0.2",{"R" , "零位校准" },menu_default},
+    {"0.0.3",{"R" , "已知校准" },menu_default},
+    {"0.0.4",{"R" , "零位补偿" },menu_default},
+    {"0.0.5",{"R" , "满程补偿" },menu_default},
+    {"0.0.6",{"R" , "数据查询" },menu_default},    
+    {"0.0.7",{"R" , "温度补偿" },menu_temp_compensate},
+    
+    {"0.1.0",{"R" , "继电器-1报警类型" },menu_relay_1_alarm_sel},
+    {"0.1.2",{"R" , "继电器-1报警值" },menu_relay_1_alarm_value},
+    {"0.1.3",{"R" , "继电器-1迟滞量" },menu_relay_1_alarm_delay},
+    {"0.1.4",{"R" , "继电器-2报警类型" },menu_relay_2_alarm_sel},
+    {"0.1.5",{"R" , "继电器-2报警值" },menu_relay_2_alarm_value},
+    {"0.1.6",{"R" , "继电器-2迟滞量" },menu_relay_2_alarm_delay},
+    
+    {"0.2.0",{"R" , "清洗时间间隔" },menu_default},
+    {"0.2.1",{"R" , "每次清洗时间设置" },menu_default},
+    
+    {"0.3.0",{"R" , "电流-1输出上限" },menu_default},
+    {"0.3.1",{"R" , "电流-1输出下限" },menu_default},
+    {"0.3.2",{"R" , "电流-1修正" },menu_default},
+    {"0.3.3",{"R" , "电流-2输出上限" },menu_default},
+    {"0.3.4",{"R" , "电流-2输出下限" },menu_default},
+    {"0.3.5",{"R" , "电流-2修正" },menu_default},
+    
+    {"0.4.0",{"R" , "采样周期" },menu_default},
+    {"0.4.1",{"R" , "背光选择" },menu_default},
+    {"0.4.2",{"R" , "密码设置" },menu_password_setup},
+    {"0.4.3",{"R" , "产品序列号" },menu_serial_no_setup},
+    
+    {"0.5.0",{"R" , "记录间隔" },menu_default},
+    {"0.5.1",{"R" , "数据查询" },menu_default},
+    {"0.5.2",{"R" , "上传数据" },menu_default},
+    
+    {"0.6.0",{"R" , "电流测试" },menu_default},
+    {"0.6.1",{"R" , "继电器测试" },menu_default},
+    {"0.6.2",{"R" , "售后服务" },menu_default},
+    
+    /*
 	{"0.0",{"Range Setup" , "量程设置" },menu_default},
     {"0.1",{"Linear Cali Setup" , "线性校准" },menu_default},
     {"0.2",{"Linear Coeff Setup" , "线性系数设置" },menu_linear_coeff_setup},
@@ -113,6 +170,23 @@ const static MenuTreeDef s_Menu[MENU_MAX] =
     {"0.4.2",{"Modbus baud" , "数据位" },menu_rs485_databit},
     {"0.4.3",{"Modbus baud" , "校验位" },menu_rs485_check},    
     {"0.4.4",{"Slave Addr" , "浊度地址设置" },menu_slave_rs485_id},
+    */
+    {"1.0",{"ss","信号设置"},menu_default},
+    {"1.1",{"ss","曲线设置"},menu_default},
+    {"1.2",{"ss","量程设置"},menu_default},
+    {"1.3",{"ss","单位设置"},menu_unit},
+    
+    {"1.0.0",{"ss","参比原始信号"},menu_disp_canbi_org_signal},
+    {"1.0.1",{"ss","参比信号比例"},menu_canbi_ratio_setup},
+    {"1.0.2",{"ss","参比计算信号"},menu_disp_canbi_calc},
+    {"1.0.3",{"ss","参比目标信号"},menu_disp_canbi_object},
+    {"1.0.4",{"ss","直射信号"},menu_disp_zhishe},
+    {"1.0.5",{"ss","折射信号"},menu_disp_zheshe},
+    
+    {"1.1.0",{"ss","低量程"},menu_default},
+    {"1.1.1",{"ss","中量程"},menu_default},
+    {"1.1.2",{"ss","高量程"},menu_default},
+    {"1.1.3",{"ss","混合量程"},menu_default},
     
 };
 
@@ -142,12 +216,7 @@ void menu_init(void)
 /*
 ***********************************************
 */
-static void screen_ch1_set(uint8_t* pscreen_index,uint8_t msg);
-
-static void screen_ch123_display(uint8_t* pscreen_index,uint8_t msg);
-         
-static void screen_zhuodu_display(uint8_t* pscreen_index,uint8_t msg);
-        
+    
 void menu_main_disp(uint8_t msg)
 {
     static uint8_t screen_index = 2;
@@ -167,10 +236,11 @@ void menu_main_disp(uint8_t msg)
     }
 }
 
+/*
 SET_STAT set_mainscreen_val(uint8_t msg,SetIntFloatDef setIntFloat);
 static void screen_ch1_set(uint8_t* pscreen_index,uint8_t msg)
 {
-    /* stat : 0 - screen select 1 - value select 2 - value modifing 3 - save or not & return to 0 */
+    // stat : 0 - screen select 1 - value select 2 - value modifing 3 - save or not & return to 0 
     static uint8_t stat = 0,timer,set_stat,flag,curr_select,set_flag;
     static Label_t label[4]; 
     static NumberBox_t number_box[4];
@@ -351,70 +421,288 @@ static void screen_ch1_set(uint8_t* pscreen_index,uint8_t msg)
         }
 	}
 }
+*/
+         
 
-static void screen_ch123_display(uint8_t* pscreen_index,uint8_t msg)
+void menu_disp_canbi_org_signal(uint8_t msg)
 {
-    switch(msg)
-    {
-        case KEY_DOWN_MENU:
-            if((*pscreen_index) > 0)
-                (*pscreen_index)--;
-        break;
-        case KEY_DOWN_OK:
-            if((*pscreen_index) < 2)
-                (*pscreen_index)++;
-        break;
-        case KEY_DOWN_DOWN:            
-            break;
-        case KEY_DOWN_UP:
-            break;
-        case KEY_DOWN_MENU_AND_OK:            
-            menu_default(NULL);
-            break;
-        default:
-            break;
-    }
-    
-    snprintf(&s_tmp_buf[0][0],25,"  CH1参比%5d%s",global.zhuodu_data.canbi_get,s_blank);
-    snprintf(&s_tmp_buf[1][0],25,"  CH2直射%5d%s",global.zhuodu_data.bright_2,s_blank);
-    snprintf(&s_tmp_buf[2][0],25,"  CH3折射%5d%s",global.zhuodu_data.bright_3,s_blank);
-    snprintf(&s_tmp_buf[3][0],25,"    温度 %4.1f%s",global.zhuodu_data.temp/10.0f,s_blank);
+    snprintf(&s_tmp_buf[0][0],25,"     CH1参比    ");
+    snprintf(&s_tmp_buf[3][0],25,"     %5d%s  ",global.zhuodu_data.canbi_get,s_blank);
     
     LCD_DisplayString(0,0,&s_tmp_buf[0][0],NOT_REVERSE);
-    LCD_DisplayString(0,16,&s_tmp_buf[1][0],NOT_REVERSE);
-    LCD_DisplayString(0,32,&s_tmp_buf[2][0],NOT_REVERSE);
+    LCD_DisplayString(0,16,s_blank,NOT_REVERSE);
+    LCD_DisplayString(0,32,s_blank,NOT_REVERSE);
     LCD_DisplayString(0,48,&s_tmp_buf[3][0],NOT_REVERSE);
-}
-         
-static void screen_zhuodu_display(uint8_t* pscreen_index,uint8_t msg)
-{
-    switch(msg)
-    {
-        case KEY_DOWN_MENU:
-        if(*pscreen_index > 0)
-            (*pscreen_index)--;
-        break;
-        case KEY_DOWN_OK:
-        if(*pscreen_index < 2)
-            (*pscreen_index)++;
-        break;
-        case KEY_DOWN_DOWN:            
-        break;
-        case KEY_DOWN_UP:
-        break;
-        case KEY_DOWN_MENU_AND_OK:            
-            menu_default(NULL);
-            break;
-        default:
-            break;
-    }
-    snprintf(&s_tmp_buf[0][0],25,"   吸光度%5.3f%s",global.zhuodu_data.absorbance,s_blank);
-    snprintf(&s_tmp_buf[1][0],25,"   浊 度 %5.3f%s",global.zhuodu_data.turbidimeter,s_blank);
     
-    LCD_DisplayString(0,0,s_blank,NOT_REVERSE);
-    LCD_DisplayString(0,16,&s_tmp_buf[0][0],NOT_REVERSE);
-    LCD_DisplayString(0,32,&s_tmp_buf[1][0],NOT_REVERSE);
-    LCD_DisplayString(0,48,s_blank,NOT_REVERSE);
+    if(msg == KEY_DOWN_MENU)
+    {
+        leaf_exit(NULL);
+    }
+}
+
+void menu_canbi_ratio_setup(uint8_t msg)
+{
+    snprintf(&s_tmp_buf[0][0],25,"    参比系数    ");
+    snprintf(&s_tmp_buf[3][0],25,"     %4f%s  ",global.zhuodu_data.a1k1,s_blank);
+    
+    LCD_DisplayString(0,0,&s_tmp_buf[0][0],NOT_REVERSE);
+    LCD_DisplayString(0,16,s_blank,NOT_REVERSE);
+    LCD_DisplayString(0,32,s_blank,NOT_REVERSE);
+    LCD_DisplayString(0,48,&s_tmp_buf[3][0],NOT_REVERSE);
+    
+    if(msg == KEY_DOWN_MENU)
+    {
+        leaf_exit(NULL);
+    }
+}
+
+void menu_disp_canbi_calc(uint8_t msg)
+{
+    snprintf(&s_tmp_buf[0][0],25,"    参比计算    ");
+    snprintf(&s_tmp_buf[3][0],25,"     %4f%s  ",global.zhuodu_data.canbi_calc_get,s_blank);
+    
+    LCD_DisplayString(0,0,&s_tmp_buf[0][0],NOT_REVERSE);
+    LCD_DisplayString(0,16,s_blank,NOT_REVERSE);
+    LCD_DisplayString(0,32,s_blank,NOT_REVERSE);
+    LCD_DisplayString(0,48,&s_tmp_buf[3][0],NOT_REVERSE
+    
+    if(msg == KEY_DOWN_MENU)
+    {
+        leaf_exit(NULL);
+    }
+}
+
+void menu_disp_canbi_object(uint8_t msg)
+{   
+    snprintf(&s_tmp_buf[0][0],25,"    参比目标    ");
+    snprintf(&s_tmp_buf[3][0],25,"     %5d%s  ",global.zhuodu_data.canbi_set,s_blank);
+    
+    LCD_DisplayString(0,0,&s_tmp_buf[0][0],NOT_REVERSE);
+    LCD_DisplayString(0,16,s_blank,NOT_REVERSE);
+    LCD_DisplayString(0,32,s_blank,NOT_REVERSE);
+    LCD_DisplayString(0,48,&s_tmp_buf[3][0],NOT_REVERSE);
+    
+    if(msg == KEY_DOWN_MENU)
+    {
+        leaf_exit(NULL);
+    }
+}
+void menu_disp_zhishe(uint8_t msg)
+{    
+    snprintf(&s_tmp_buf[0][0],25,"    直射信号   ");
+    snprintf(&s_tmp_buf[3][0],25,"     %5d%s  ",global.zhuodu_data.bright_2,s_blank);
+    
+    LCD_DisplayString(0,0,&s_tmp_buf[0][0],NOT_REVERSE);
+    LCD_DisplayString(0,16,s_blank,NOT_REVERSE);
+    LCD_DisplayString(0,32,s_blank,NOT_REVERSE);
+    LCD_DisplayString(0,48,&s_tmp_buf[3][0],NOT_REVERSE);
+    
+    if(msg == KEY_DOWN_MENU)
+    {
+        leaf_exit(NULL);
+    }
+    
+}
+void menu_disp_zheshe(uint8_t msg)
+{
+    snprintf(&s_tmp_buf[0][0],25,"    折射信号   ");
+    snprintf(&s_tmp_buf[3][0],25,"     %5d%s  ",global.zhuodu_data.bright_3,s_blank);
+    
+    LCD_DisplayString(0,0,&s_tmp_buf[0][0],NOT_REVERSE);
+    LCD_DisplayString(0,16,s_blank,NOT_REVERSE);
+    LCD_DisplayString(0,32,s_blank,NOT_REVERSE);
+    LCD_DisplayString(0,48,&s_tmp_buf[3][0],NOT_REVERSE);
+    
+    if(msg == KEY_DOWN_MENU)
+    {
+        leaf_exit(NULL);
+    }
+}
+
+void menu_unit(uint8_t msg)
+{
+    uint8_t lang = get_language();
+    SET_STAT setStat;
+    uint8_t retVal;
+    const char* title = "单位设置        ";
+    const char* const select_arr[]=
+    {
+        "NTU","mg/L",
+    };
+    LCD_DisplayString(0,0,(char*)title,NOT_REVERSE);
+    
+    setStat = set_select( msg, select_arr,sizeof(select_arr[0]),countof(select_arr), global.unit, &retVal);
+   
+    if( setStat == SET_OK  )
+    {
+        global.unit = retVal;
+        rt_device_write(mb85_bus, E2P_OFFSET(unit), (uint8_t*)&global.unit, 1);
+        leaf_exit(NULL);
+    }
+    else if(setStat == SET_EXIT)
+    {
+        leaf_exit(NULL);
+    }
+}
+
+
+void menu_relay_1_alarm_sel(uint8_t msg)
+{
+    uint8_t lang = get_language();
+    SET_STAT setStat;
+    uint8_t retVal;
+    eMBMasterReqErrCode err_code;
+    
+    const char* title = "继电器-1报警类型        ";
+    const char* const select_arr[]=
+    {
+        "低报警","高报警",
+    };
+    LCD_DisplayString(0,0,(char*)title,NOT_REVERSE);
+    
+    setStat = set_select( msg, select_arr,sizeof(select_arr[0]),countof(select_arr), global.relay_1_alarm_method, &retVal);
+   
+    if( setStat == SET_OK  )
+    {
+        global.relay_1_alarm_method = retVal;        
+        leaf_exit(NULL);
+    }
+    else if(setStat == SET_EXIT)
+    {
+        leaf_exit(NULL);
+    }
+}
+
+void menu_relay_1_alarm_value(uint8_t msg)
+{
+    uint8_t lang = get_language();
+    SET_STAT setStat;
+    double retVal;
+    const char* const titleLang[] = { " " , "继电器-1报警值"};
+    
+    setIntFloat.dataType = FLOAT_32_T;
+    setIntFloat.setData = global.relay_1_alarm_val;
+    setIntFloat.max = 10000;
+    setIntFloat.min = -10000;
+    setIntFloat.pRetVal = &retVal;
+        
+    LCD_DisplayString(0,0,(char*)titleLang[lang],NOT_REVERSE);
+    setStat = set_int_float_min_max( msg, setIntFloat);
+    if( setStat == SET_OK)
+    {
+        global.relay_1_alarm_val = retVal;
+        leaf_exit(NULL);
+    }
+    else if(setStat == SET_EXIT)
+    {
+        leaf_exit(NULL);
+    }
+}
+
+void menu_relay_1_alarm_delay(uint8_t msg)
+{
+    uint8_t lang = get_language();
+    SET_STAT setStat;
+    double retVal;
+    const char* const titleLang[] = { " " , "继电器-1迟滞量"};
+    
+    setIntFloat.dataType = FLOAT_32_T;
+    setIntFloat.setData = global.relay_1_alarm_delay;
+    setIntFloat.max = 10000;
+    setIntFloat.min = 0;
+    setIntFloat.pRetVal = &retVal;
+        
+    LCD_DisplayString(0,0,(char*)titleLang[lang],NOT_REVERSE);
+    setStat = set_int_float_min_max( msg, setIntFloat);
+    if( setStat == SET_OK)
+    {
+        global.relay_1_alarm_delay = retVal;
+        leaf_exit(NULL);
+    }
+    else if(setStat == SET_EXIT)
+    {
+        leaf_exit(NULL);
+    }
+}
+
+
+void menu_relay_2_alarm_sel(uint8_t msg)
+{
+    uint8_t lang = get_language();
+    SET_STAT setStat;
+    uint8_t retVal;
+    eMBMasterReqErrCode err_code;
+    
+    const char* title = "继电器-2报警类型        ";
+    const char* const select_arr[]=
+    {
+        "低报警","高报警",
+    };
+    LCD_DisplayString(0,0,(char*)title,NOT_REVERSE);
+    
+    setStat = set_select( msg, select_arr,sizeof(select_arr[0]),countof(select_arr), global.relay_2_alarm_method, &retVal);
+   
+    if( setStat == SET_OK  )
+    {
+        global.relay_2_alarm_method = retVal;        
+        leaf_exit(NULL);
+    }
+    else if(setStat == SET_EXIT)
+    {
+        leaf_exit(NULL);
+    }
+}
+
+void menu_relay_2_alarm_value(uint8_t msg)
+{
+    uint8_t lang = get_language();
+    SET_STAT setStat;
+    double retVal;
+    const char* const titleLang[] = { " " , "继电器-2报警值"};
+    
+    setIntFloat.dataType = FLOAT_32_T;
+    setIntFloat.setData = global.relay_2_alarm_val;
+    setIntFloat.max = 10000;
+    setIntFloat.min = -10000;
+    setIntFloat.pRetVal = &retVal;
+        
+    LCD_DisplayString(0,0,(char*)titleLang[lang],NOT_REVERSE);
+    setStat = set_int_float_min_max( msg, setIntFloat);
+    if( setStat == SET_OK)
+    {
+        global.relay_2_alarm_val = retVal;
+        leaf_exit(NULL);
+    }
+    else if(setStat == SET_EXIT)
+    {
+        leaf_exit(NULL);
+    }
+}
+
+void menu_relay_2_alarm_delay(uint8_t msg)
+{
+    uint8_t lang = get_language();
+    SET_STAT setStat;
+    double retVal;
+    const char* const titleLang[] = { " " , "继电器-1迟滞量"};
+    
+    setIntFloat.dataType = FLOAT_32_T;
+    setIntFloat.setData = global.relay_2_alarm_delay;
+    setIntFloat.max = 10000;
+    setIntFloat.min = 0;
+    setIntFloat.pRetVal = &retVal;
+        
+    LCD_DisplayString(0,0,(char*)titleLang[lang],NOT_REVERSE);
+    setStat = set_int_float_min_max( msg, setIntFloat);
+    if( setStat == SET_OK)
+    {
+        global.relay_2_alarm_delay = retVal;
+        leaf_exit(NULL);
+    }
+    else if(setStat == SET_EXIT)
+    {
+        leaf_exit(NULL);
+    }
 }
 
 void menu_range_sel(uint8_t msg)
@@ -422,22 +710,24 @@ void menu_range_sel(uint8_t msg)
     uint8_t lang = get_language();
     SET_STAT setStat;
     uint8_t retVal;
-    const char* const titleLang[] = { "          " , "量程选择        "};
-    const char* const commFormatStr[][LANG_MAX]=
-    {
-        {"1","1"},
-        {"2","2"},
-        {"3","3"},
-        {"4","4"},
-    };
-    LCD_DisplayString(0,0,(char*)titleLang[lang],NOT_REVERSE);
+    eMBMasterReqErrCode err_code;
     
-    setStat = set_select( msg, commFormatStr,sizeof(commFormatStr[0]),4, global.zhuodu_data.range_sel, &retVal);
+    const char* title = "量程设置        ";
+    const char* const select_arr[]=
+    {
+        "1","2","3","4",
+    };
+    LCD_DisplayString(0,0,(char*)title,NOT_REVERSE);
+    
+    setStat = set_select( msg, select_arr,sizeof(select_arr[0]),countof(select_arr), global.zhuodu_data.range_sel, &retVal);
    
     if( setStat == SET_OK  )
     {
         eMBMasterReqWriteHoldingRegister(1,0x100+29,retVal,RT_TICK_PER_SECOND / 2); 
-        global.zhuodu_data.range_sel = retVal;
+        if( MB_MRE_NO_ERR == err_code)
+        {
+            global.zhuodu_data.range_sel = retVal;
+        }
         leaf_exit(NULL);
     }
     else if(setStat == SET_EXIT)
@@ -1360,6 +1650,41 @@ void menu_rs485_id(uint8_t msg)
     }
 }
 
+/*
+*****************
+*/
+
+void menu_temp_compensate(uint8_t msg)
+{
+    uint8_t lang = get_language();
+    SET_STAT setStat;
+    double retVal;
+    const char* const titleLang[] = { "ssss       " , "温度补偿        "};
+          
+    setIntFloat.dataType = INT_16_T;
+    setIntFloat.setData = global.temp_compensate;
+    setIntFloat.max = 1000.0f;
+    setIntFloat.min = -1000.0f;
+    setIntFloat.pRetVal = &retVal;
+    
+    LCD_DisplayString(0,0,(char*)titleLang[lang],NOT_REVERSE);
+    setStat = set_int_float_min_max( msg, setIntFloat);
+    if( setStat == SET_OK )
+    {
+        global.temp_compensate = retVal;
+        rt_device_write(mb85_bus, E2P_OFFSET(temp_compensate), (uint8_t*)&g.temp_compensate, 2);
+        leaf_exit(NULL);
+    }
+    else if(setStat == SET_MAX_MIN_ERROR)
+    {        
+    }
+    else if(setStat == SET_EXIT)
+    {
+        leaf_exit(NULL);
+    }
+}
+
+
 
 /*
 ***********************************************
@@ -1368,8 +1693,8 @@ void menu_reset_factory(uint8_t msg)
 {
     uint8_t lang = get_language();
     static uint8_t flag;
-    const char* const titleLang[] = { "Reset Factory   ","恢复出厂设置    ","Reset Factory   "};
-    const char* pStr[][3] = {{"No","否","No"},{"Yes","是","Yes"}};
+    const char* const titleLang[] = { "Reset Factory   ","恢复出厂设置    "};
+    const char* pStr[][3] = {{"No","否","No"},{"Yes","是"}};
 
     LCD_DisplayString(0,0,(char*)titleLang[lang],NOT_REVERSE);
     LCD_DisplayString(0,16,"                ",NOT_REVERSE);
@@ -1387,7 +1712,67 @@ void menu_reset_factory(uint8_t msg)
         default: break;
     }
 }
+/*
+*******************
+*/
+void menu_serial_no_setup(uint8_t msg)
+{
+    uint8_t lang = get_language();
+    SET_STAT setStat;
+    float64_t retVal;
+    const char* const titleLang[] = { "Sensor Code    " , "传感器编码     ","Sensor Code "};
+    
+    setIntFloat.dataType = INT_32_T;
+    setIntFloat.setData = g.serial_no;
+    setIntFloat.max = 999999.0f;
+    setIntFloat.min = 0.0f;
+    setIntFloat.pRetVal = &retVal;
+    
+    LCD_DisplayString(0,0,(char*)titleLang[lang],NOT_REVERSE);
+    setStat = set_int_float_min_max( msg, setIntFloat);
+    if( setStat == SET_OK )
+    {
+        g.serial_no = retVal;
+        rt_device_write(mb85_bus, E2P_OFFSET(serial_no), (uint8_t*)&g.serial_no , 4);
+        leaf_exit(NULL);
+    }
+    else if(setStat == SET_EXIT)
+    {
+        leaf_exit(NULL);
+    }
+}
 
+/*
+*******************
+*/
+void menu_password_setup(uint8_t msg)
+{
+    uint8_t lang = get_language();
+    SET_STAT setStat;
+    uint32_t setData;
+    float64_t retVal;
+    const char* const titleLang[] = { "Password Setup  " , "密码设置        "};
+    
+    setIntFloat.dataType = INT_32_T;
+    setIntFloat.setData = g.password;
+    setIntFloat.max = 999999.0f;
+    setIntFloat.min = 0.0f;
+    setIntFloat.pRetVal = &retVal;
+    
+    LCD_DisplayString(0,0,(char*)titleLang[lang],NOT_REVERSE);
+    setStat = set_int_float_min_max( msg, setIntFloat);
+    if( setStat == SET_OK )
+    {
+        g.password  = retVal;        
+        rt_device_write(mb85_bus, E2P_OFFSET(password), (uint8_t*)&g.password , 4);
+        snprintf(g.password_buf,7,"%06d",g.password);
+        leaf_exit(NULL);
+    }
+    else if(setStat == SET_EXIT)
+    {
+        leaf_exit(NULL);
+    }
+}
 /*
 ***********************************************
 */
@@ -1713,6 +2098,116 @@ void disp_main_screen(uint8_t x,uint8_t y,char *p,uint8_t width,uint8_t reverse_
 /*
 ***********************************************
 */
+
+uint8_t get_password(uint8_t msg,uint8_t* outBuf)
+{
+    uint8_t retVal,passVal;
+	uint32_t i;
+    
+    static uint8_t flag;	/* in exit proc,it should be reset */
+	uint8_t ascii;
+    char buf[17];
+    static uint8_t keyDown;
+    static uint8_t cnt;
+    uint8_t lang = get_language();
+    const char* const titleLang[LANG_MAX] = {" Input Password " , "   请输入密码   "," Input Password "};
+    const char* stars = "******";
+
+    LCD_DisplayString(0,0,(char*)titleLang[lang],NOT_REVERSE);
+    LCD_DisplayString(0,16,"                ",NOT_REVERSE);
+    LCD_DisplayString(0,32,"                ",NOT_REVERSE);
+
+	if(flag == 0)
+	{
+        flag = 1;
+		s_cur = 0;
+        //snprintf(s_set_buf,7,"000000");
+		strncpy(s_set_buf,"000000",7);
+	}
+	
+    snprintf(buf,17,"          %*s",s_cur,stars);    
+    LCD_DisplayString(0,48,buf,NOT_REVERSE);
+    if(keyDown == 1 && cnt < 10)
+    {
+        cnt++;
+        buf[0] = s_set_buf[s_cur];buf[1] = 0;
+    }
+    else
+    {
+        keyDown = 0; cnt = 0;
+        buf[0] = '*';buf[1] = 0;
+    }
+    LCD_DisplayString( (10+s_cur)*8,48,buf,REVERSE);
+    snprintf(buf,17,"%s",&stars[s_cur + 1]);    
+    LCD_DisplayString((11+s_cur)*8,48,buf,NOT_REVERSE);
+    
+	switch(msg)
+	{
+	case KEY_DOWN_UP:		
+        keyDown = 1;
+        cnt = 0;
+        ascii = ++s_set_buf[s_cur];
+        if(ascii == '9' + 1)
+        {
+            s_set_buf[s_cur] = '0';
+        }
+        retVal = 0;
+        break;
+	case KEY_DOWN_DOWN:	
+        keyDown = 1;
+        cnt = 0;        
+        ascii = --s_set_buf[s_cur];
+        if(ascii == '0' - 1)
+        {
+            s_set_buf[s_cur] = '9';
+        }
+        retVal = 0;
+        break;
+	case KEY_DOWN_MENU:
+        flag = 0;
+        keyDown = 0;
+        cnt = 0;
+        retVal = 1;
+		strncpy(outBuf,s_set_buf,6);		
+        break;
+	case KEY_DOWN_OK:			
+        keyDown = 1;
+        cnt = 0;
+        if(++s_cur == 6)
+        {
+            s_cur = 0;
+        }
+        retVal = 0;
+        break;
+	default:
+        retVal = 0;
+		break;
+	}
+    return retVal;
+}
+
+
+void pass_proc(uint8_t msg)
+{
+	uint8_t passWord[6];
+    uint8_t pasL;
+	uint32_t i,tmp_32;
+    char buf[17];
+	
+    if(1 == get_password(msg,passWord))
+    {
+		if( 0 == strncmp(passWord,g.password_buf,6) )
+		{
+			
+			jump2func(NULL);
+            jump2submenu("1");
+		}
+        else
+        {
+            leaf_exit(NULL);
+        }
+    }
+}
 
 static void get_utf8_len(char *pStr,uint16_t *pTotalLen,uint16_t *pAsciiLen)
 {

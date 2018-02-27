@@ -106,6 +106,21 @@ typedef struct
     uint8_t comm_parity;
     uint8_t comm_device_id;
    
+    uint32_t password;
+    uint8_t password_buf[6];
+    uint32_t serial_no;
+    
+    uint8_t unit;
+    int16_t temp_compensate;
+    
+    uint8_t relay_1_alarm_method;
+    float relay_1_alarm_val;
+    float relay_1_alarm_delay;
+    
+    uint8_t relay_2_alarm_method;
+    float relay_2_alarm_val;
+    float relay_2_alarm_delay;
+    
     Zhuodu_t zhuodu_data;
     
     

@@ -25,16 +25,13 @@ void restore_factory_settings(void)
     uint16_t addr;
     uint8_t *p;
 
-    //ee_WriteBytes((uint8_t*)&ee_init,0,2);
     rt_device_write(mb85_bus, 0, (uint8_t*)&ee_init, 2);
     
     addr = EE_UNPROTECTED();
     p = (uint8_t*)&c_FactorySetting + addr;
-    //ee_WriteBytes(p,addr,sizeof(c_FactorySetting) - addr);
     rt_device_write(mb85_bus, addr, (uint8_t*)p, sizeof(c_FactorySetting) - addr);
     
     ee_init = EE_RESET_FACTORY_OVER;
-    //ee_WriteBytes((uint8_t*)&ee_init,0,2);
     rt_device_write(mb85_bus, 0, (uint8_t*)&ee_init, 2);
     
 }
@@ -56,34 +53,3 @@ void full_reset_eeprom(void)
     rt_device_write(mb85_bus, 0, (uint8_t*)&ee_init, 2);
 }
 
-
-void restore_convter_settings(void)
-{
-    uint16_t ee_init = EE_RESET_FACTORY_ING;
-    uint8_t *p = (uint8_t*)&c_FactorySetting,lcdStyle,lcdContrast;
-    uint16_t addr;
-
-    //ee_WriteBytes((uint8_t*)&ee_init,0,2);
-    rt_device_write(mb85_bus, 0, (uint8_t*)&ee_init, 2);
-    
-    //ee_ReadBytes((uint8_t*)&lcdStyle,E2P_OFFSET(is_disp_reverse),1);
-    //ee_ReadBytes((uint8_t*)&lcdContrast,E2P_OFFSET(lcd_contrast),1);
-    rt_device_read(mb85_bus, E2P_OFFSET(is_disp_reverse), (uint8_t*)&lcdStyle, 1);
-    rt_device_read(mb85_bus, E2P_OFFSET(lcd_contrast), (uint8_t*)&lcdContrast, 1);
-    
-    addr = EE_UNPROTECTED();
-    p = (uint8_t*)&c_FactorySetting + addr;
-    
-    //ee_WriteBytes(p,addr,sizeof(c_FactorySetting) - addr);
-    rt_device_write(mb85_bus, addr, (uint8_t*)p, sizeof(c_FactorySetting) - addr);
-    
-    //ee_WriteBytes((uint8_t*)&lcdStyle,E2P_OFFSET(is_disp_reverse),1);
-    //ee_WriteBytes((uint8_t*)&lcdContrast,E2P_OFFSET(lcd_contrast),1);
-    rt_device_write(mb85_bus, E2P_OFFSET(is_disp_reverse), (uint8_t*)&lcdStyle, 1);
-    rt_device_write(mb85_bus, E2P_OFFSET(lcd_contrast), (uint8_t*)&lcdContrast, 1);
-    
-    ee_init = EE_RESET_FACTORY_OVER;
-    //ee_WriteBytes((uint8_t*)&ee_init,0,2);
-    rt_device_write(mb85_bus, 0, (uint8_t*)&ee_init, 2);
-    
-}

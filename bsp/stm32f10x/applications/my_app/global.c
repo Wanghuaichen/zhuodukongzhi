@@ -18,6 +18,7 @@ void global_init(void)
     uint8_t tmp_u8;
     int i;
     uint16_t eeprom;
+    uint32_t tmp_u32;
     
     rt_device_read(mb85_bus, E2P_OFFSET(eeprom), (uint8_t*)&eeprom, 2);
 	
@@ -42,5 +43,11 @@ void global_init(void)
     // action
     rt_device_read(mb85_bus, E2P_OFFSET(is_disp_reverse), (uint8_t*)&tmp_u8, 1);
     // action
+    
+    rt_device_read(mb85_bus, E2P_OFFSET(password), (uint8_t*)&tmp_u32, 4);
+    
+    g.password = tmp_u32;
+	snprintf(g.password_buf,7,"%06d",g.password);
+
    
 }
