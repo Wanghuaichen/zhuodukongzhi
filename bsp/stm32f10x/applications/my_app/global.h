@@ -35,8 +35,7 @@ enum DATA_TYPE
 typedef struct zhudu
 {
     
-    // user
-    
+    // user    
     float turbidimeter_range_1;
     float turbidimeter_range_2;
     float turbidimeter_range_3;
@@ -79,7 +78,7 @@ typedef struct zhudu
 
 	// 0x200 start
 	float turbidimeter_cali_buf[4];
-	float absorbance_cali_buf[4];
+	float absorbance_cali_buf[4];       // xiguang
 	uint16_t cali_data_write;
 	uint16_t data_val_0;
 	float seg_range_3;
@@ -89,7 +88,7 @@ typedef struct zhudu
 	int16_t cmd_a3_full;
 	int16_t cmd_a2_zero;
 	
-	uint16_t dev_addr;
+	uint16_t zhuodu_addr;
 	
 }Zhuodu_t;
 
@@ -120,6 +119,20 @@ typedef struct
     uint8_t relay_2_alarm_method;
     float relay_2_alarm_val;
     float relay_2_alarm_delay;
+    
+    
+    uint8_t curr_out_1_stat:2;
+    uint8_t curr_out_2_stat:2;
+    
+    float curr_out_1_duty4;
+    float curr_out_1_duty20;
+    float curr_out_1_uplimit;
+    float curr_out_1_downlimit;
+    
+    float curr_out_2_duty4;
+    float curr_out_2_duty20;
+    float curr_out_2_uplimit;
+    float curr_out_2_downlimit;
     
     Zhuodu_t zhuodu_data;
     

@@ -393,3 +393,14 @@ void set_line_dat(uint8_t line,uint8_t *buf)
     }
 }
 
+void lcd_fill_screen(uint8_t *buf)
+{
+	int i;
+    uint8_t *p = (uint8_t*)lcd_buf;
+	
+	for(i = 0; i < 128*8; i++)
+    {
+        p[i] = buf[i]; 
+    }
+}
+

@@ -71,7 +71,7 @@ typedef enum
 }KEY_ENUM;
 
 /* 按键FIFO用到变量 */
-#define KEY_FIFO_SIZE	20
+#define KEY_FIFO_SIZE	5
 typedef struct
 {
 	uint8_t Buf[KEY_FIFO_SIZE];		/* 键值缓冲区 */

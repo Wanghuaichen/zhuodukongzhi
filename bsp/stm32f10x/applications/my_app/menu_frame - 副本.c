@@ -263,7 +263,6 @@ void jump2menu(char *pIndex)
 	char tmpOut[20];
 	
     s_MenuStatus = STATUS_NODE;
-    s_FuncReload.reload = false;
 	if(pIndex == NULL)
 	{
 		strncpy(tmpOut,psMenuCurr->pIndex,18 - 1);
@@ -369,13 +368,13 @@ static uint8_t update_node_list(char *str)
 }
 
 
-void leaf_exit( void(*exit_hook)(void) )
+void leaf_exit( void(*exit_callback)(void) )
 {
 	s_MenuStatus = STATUS_NODE;
 	s_FuncReload.reload = false;
-    if(exit_hook != NULL)
+    if(exit_callback != NULL)
     {
-        exit_hook();
+        exit_callback();
     }
 }
 

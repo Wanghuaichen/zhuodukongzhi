@@ -26,6 +26,15 @@ typedef struct
 	uint8_t is_disp_reverse;
     uint32_t password;
     
+    float curr_out_1_duty4;
+    float curr_out_1_duty20;
+    float curr_out_1_uplimit;
+    float curr_out_1_downlimit;
+    float curr_out_2_duty4;
+    float curr_out_2_duty20;
+    float curr_out_2_uplimit;
+    float curr_out_2_downlimit;
+    
 	//unprotected
     uint8_t unprotected;
     uint8_t language;
@@ -35,11 +44,11 @@ typedef struct
     uint8_t comm_databit;
     uint8_t comm_parity;
     uint8_t comm_device_id;
+    uint8_t zhuodu_addr;
     
     uint8_t unit;
     int16_t temp_compensate;
     uint32_t serial_no;
-    
     
 }E2P_TypeDef;
 

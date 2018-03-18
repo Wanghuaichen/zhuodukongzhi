@@ -43,11 +43,11 @@ struct MenuTree
 };
 
 void jump2func( void(*pFunc)(uint8_t msg) );
-void jump2submenu(char* pIndex);
+void jump2menu(char *pIndex);
 void menu_main(void);
 void menu_var_init(pMenuTreeDef pMenu);
-void menu_default(uint8_t msg);
-void leaf_exit( void(*pFunc)(void) );
+void menu_default(void);
+void leaf_exit( void(*exit_hook)(void) );
 
 #ifdef __cplusplus
 }

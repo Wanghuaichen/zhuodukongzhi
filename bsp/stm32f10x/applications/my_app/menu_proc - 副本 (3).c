@@ -115,8 +115,6 @@ void menu_display_ch123(uint8_t msg);
 void menu_4mA_zhuodu_cali(uint8_t msg);
 void menu_20mA_zhuodu_cali(uint8_t msg);
 
-void pass_proc(uint8_t msg);
-
 const static MenuTreeDef s_Menu[MENU_MAX] =
 {
 	{"0",{"root","root"}, menu_main_disp},
@@ -257,14 +255,15 @@ void menu_main_disp(uint8_t msg)
     */
 
     menu_display_zhuodu_xiguangdu(KEY_NONE);
-    if(msg == KEY_DOWN_MENU_AND_OK)
-    {
-        //jump2menu("1");
-        jump2func(pass_proc);
-    }
-    else if(msg == KEY_DOWN_OK)
+    if(msg == KEY_DOWN_OK)
     {
         menu_default();
+    }
+    else if(msg == KEY_UP_MENU_AND_OK)
+    {
+//        GetKey();GetKey();GetKey();GetKey();GetKey();GetKey();GetKey();GetKey();GetKey();GetKey();GetKey();GetKey();
+//        msg = KEY_NONE;
+        jump2menu("1");
     }
 }
 
@@ -2421,7 +2420,7 @@ uint8_t get_password(uint8_t msg,uint8_t* outBuf)
 	
     snprintf(buf,17,"          %*s",s_cur,stars);    
     LCD_DisplayString(0,48,buf,NOT_REVERSE);
-    if(keyDown == 1 && cnt < 30)
+    if(keyDown == 1 && cnt < 10)
     {
         cnt++;
         buf[0] = s_set_buf[s_cur];buf[1] = 0;
@@ -2492,11 +2491,13 @@ void pass_proc(uint8_t msg)
     {
 		if( 0 == strncmp(passWord,global.password_buf,6) )
 		{
+			
+			jump2func(NULL);
             jump2menu("1");
 		}
         else
         {
-            jump2func(NULL);
+            leaf_exit(NULL);
         }
     }
 }

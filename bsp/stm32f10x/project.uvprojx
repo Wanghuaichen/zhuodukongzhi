@@ -420,6 +420,11 @@
               <FileType>1</FileType>
               <FilePath>.\applications\my_app\12864_ui.c</FilePath>
             </File>
+            <File>
+              <FileName>formula.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\applications\my_app\formula.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

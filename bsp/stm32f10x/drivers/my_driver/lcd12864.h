@@ -38,6 +38,7 @@ void draw_point_in_buffer(uint8_t x,uint8_t y,uint8_t dat);
 void lcd_buf_flush(void);
 void get_line_dat(uint8_t line,uint8_t *buf);
 void set_line_dat(uint8_t line,uint8_t *buf);
+void lcd_fill_screen(uint8_t *buf);
 
 #ifdef __cplusplus
 }

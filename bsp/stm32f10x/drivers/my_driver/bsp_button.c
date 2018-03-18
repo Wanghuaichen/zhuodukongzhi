@@ -257,7 +257,7 @@ static void InitButtonVar(void)
 	s_BtnMenuOk.Count = s_BtnMenuOk.FilterTime / 2;    
 	s_BtnMenuOk.State = 0;                            
 	s_BtnMenuOk.KeyCodeDown = 0;         
-	s_BtnMenuOk.KeyCodeUp = 0;                  
+	s_BtnMenuOk.KeyCodeUp = KEY_UP_MENU_AND_OK;                  
 	s_BtnMenuOk.KeyCodeLong = 0;                     
 	s_BtnMenuOk.keyCodeCombPrime1_2 = KEY_DOWN_MENU_AND_OK;                       
 	s_BtnMenuOk.keyCodeCombPrime2_1 = 0; 
@@ -316,7 +316,16 @@ static void DetectButton(BUTTON_T *_pBtn)
                     {
                         if(_pBtn->KeyCodeDown > 0)
                         {
-                            PutKey(_pBtn->KeyCodeDown);
+                            if( _pBtn->KeyCodeDown == KEY_DOWN_MENU_AND_OK)
+                            {
+                                s_Key.Read = 0;
+                                s_Key.Write = 0;
+                                PutKey(_pBtn->KeyCodeDown);
+                            }
+                            else
+                            {
+                                PutKey(_pBtn->KeyCodeDown);
+                            }
                         }                        
                     }
                     else if(_pBtn->State == 2)
