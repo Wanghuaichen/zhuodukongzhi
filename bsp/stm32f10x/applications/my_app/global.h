@@ -34,7 +34,6 @@ enum DATA_TYPE
 
 typedef struct zhudu
 {
-    
     // user    
     float turbidimeter_range_1;
     float turbidimeter_range_2;
@@ -112,11 +111,11 @@ typedef struct
     uint8_t unit;
     int16_t temp_compensate;
     
-    uint8_t relay_1_alarm_method;
+    uint8_t relay_1_alarm_type;
     float relay_1_alarm_val;
     float relay_1_alarm_delay;
     
-    uint8_t relay_2_alarm_method;
+    uint8_t relay_2_alarm_type;
     float relay_2_alarm_val;
     float relay_2_alarm_delay;
     

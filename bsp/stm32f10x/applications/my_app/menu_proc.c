@@ -10,7 +10,6 @@
 #include "12864_ui.h"
 #include "mb.h"
 #include "mb_m.h"
-//#include "bsp_24xx02.h"
 
 typedef enum SET_STAT 
 {
@@ -199,12 +198,12 @@ const static MenuTreeDef s_Menu[MENU_MAX] =
     {"1.3.1",{"ss","参比波动范围"},NULL},
     //参比原始信号  直射信号 折射信号
     {"1.3.2",{"R" , "通道1-2-3" },menu_display_ch123},
-    {"1.3.5",{"ss","参比计算信号"},menu_disp_canbi_calc},
-    {"1.3.6",{"ss","参比系数"},menu_canbi_ratio_setup},
-    {"1.3.7",{"ss","吸光度 & 浊度"},menu_display_zhuodu_xiguangdu},
-    {"1.3.8",{"ss","2公式参比"},NULL},
-    {"1.3.9",{"ss","3公式参比"},NULL},
-    {"1.3.10",{"ss","计算确认"},NULL},
+    {"1.3.3",{"ss","参比计算信号"},menu_disp_canbi_calc},
+    {"1.3.4",{"ss","参比系数"},menu_canbi_ratio_setup},
+    {"1.3.5",{"ss","吸光度 & 浊度"},menu_display_zhuodu_xiguangdu},
+    {"1.3.6",{"ss","2公式参比"},NULL},
+    {"1.3.7",{"ss","3公式参比"},NULL},
+    {"1.3.8",{"ss","计算确认"},NULL},
     
  
     
@@ -431,11 +430,12 @@ void menu_relay_1_alarm_sel(uint8_t msg)
     };
     LCD_DisplayString(0,0,(char*)title,NOT_REVERSE);
     
-    setStat = set_select( msg, (void*)select_arr,sizeof(select_arr[0]),countof(select_arr), global.relay_1_alarm_method, &retVal);
+    setStat = set_select( msg, (void*)select_arr,sizeof(select_arr[0]),countof(select_arr), global.relay_1_alarm_type, &retVal);
    
     if( setStat == SET_OK  )
     {
-        global.relay_1_alarm_method = retVal;        
+        global.relay_1_alarm_type = retVal;
+        rt_device_write(mb85_bus, E2P_OFFSET(relay_1_alarm_type), (uint8_t*)&global.relay_1_alarm_type, 1);        
         leaf_exit(NULL);
     }
     else if(setStat == SET_EXIT)
@@ -511,11 +511,12 @@ void menu_relay_2_alarm_sel(uint8_t msg)
     };
     LCD_DisplayString(0,0,(char*)title,NOT_REVERSE);
     
-    setStat = set_select( msg, (void*)select_arr,sizeof(select_arr[0]),countof(select_arr), global.relay_2_alarm_method, &retVal);
+    setStat = set_select( msg, (void*)select_arr,sizeof(select_arr[0]),countof(select_arr), global.relay_2_alarm_type, &retVal);
    
     if( setStat == SET_OK  )
     {
-        global.relay_2_alarm_method = retVal;        
+        global.relay_2_alarm_type = retVal;
+        rt_device_write(mb85_bus, E2P_OFFSET(relay_2_alarm_type), (uint8_t*)&global.relay_2_alarm_type, 1);        
         leaf_exit(NULL);
     }
     else if(setStat == SET_EXIT)
@@ -2012,7 +2013,7 @@ void menu_serial_no_setup(uint8_t msg)
     uint8_t lang = get_language();
     SET_STAT setStat;
     float64_t retVal;
-    const char* const titleLang[] = { "Sensor Code    " , "传感器编码     ","Sensor Code "};
+    const char* const titleLang[] = { "Sensor Code    " , "传感器编码     "};
     
     setIntFloat.dataType = INT_32_T;
     setIntFloat.setData = global.serial_no;

@@ -13,16 +13,16 @@ extern "C" {
 /** button */
 #define UPKEY_GPIO_CLK              RCC_APB2Periph_GPIOB
 #define UPKEY_GPIO_PORT             GPIOB
-#define UPKEY_PIN                   GPIO_Pin_4
+#define UPKEY_PIN                   GPIO_Pin_6
 #define DOWNKEY_GPIO_CLK            RCC_APB2Periph_GPIOB
 #define DOWNKEY_GPIO_PORT           GPIOB
 #define DOWNKEY_PIN                 GPIO_Pin_5
 #define MENUKEY_GPIO_CLK            RCC_APB2Periph_GPIOB
 #define MENUKEY_GPIO_PORT           GPIOB
-#define MENUKEY_PIN                 GPIO_Pin_6
+#define MENUKEY_PIN                 GPIO_Pin_7
 #define OKKEY_GPIO_CLK              RCC_APB2Periph_GPIOB
 #define OKKEY_GPIO_PORT             GPIOB
-#define OKKEY_PIN                   GPIO_Pin_3
+#define OKKEY_PIN                   GPIO_Pin_4
 
 
 #define UpKeyDown()                 (GPIO_ReadInputDataBit(UPKEY_GPIO_PORT, UPKEY_PIN) == Bit_RESET)
@@ -46,10 +46,6 @@ extern "C" {
 
 #define I2C_SCL_READ()  ((I2C_SCL_PORT->IDR & I2C_SCL_PIN) != 0)	/* read SCL state */
 #define I2C_SDA_READ()  ((I2C_SDA_PORT->IDR & I2C_SDA_PIN) != 0)	/* read SDA state */	
-	
-//Switch
-#define switch_ch1()                   GPIOB->BRR = GPIO_Pin_14
-#define switch_ch2()                   GPIOB->BSRR = GPIO_Pin_14
 
 #ifdef __cplusplus
 }

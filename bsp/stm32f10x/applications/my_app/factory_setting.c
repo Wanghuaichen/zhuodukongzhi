@@ -21,6 +21,9 @@ const E2P_TypeDef c_FactorySetting =
     0,3,0,0,1,1,   //rs485
     0,
     0,
+    
+    0,
+    0,
     586007,
     
 };

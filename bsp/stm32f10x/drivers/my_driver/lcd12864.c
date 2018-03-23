@@ -2,23 +2,24 @@
 #include "lcd12864.h"
 #include "fonts.h"
 #include "global.h"
+#include "rtdevice.h"
 
-#define LCD_GPIO_RST_PORT	GPIOC
-#define LCD_GPIO_RST		GPIO_Pin_12
+#define LCD_GPIO_RST_PORT	GPIOD
+#define LCD_GPIO_RST		GPIO_Pin_2
 
-#define LCD_GPIO_CS_PORT	GPIOD
-#define LCD_GPIO_CS			GPIO_Pin_2
+#define LCD_GPIO_CS_PORT	GPIOB
+#define LCD_GPIO_CS			GPIO_Pin_3
 
 #define LCD_GPIO_CD_PORT	GPIOC
-#define LCD_GPIO_CD			GPIO_Pin_11
+#define LCD_GPIO_CD			GPIO_Pin_12
 
 #define LCD_GPIO_SCK_PORT	GPIOC
-#define LCD_GPIO_SCK		GPIO_Pin_10
+#define LCD_GPIO_SCK		GPIO_Pin_11
 
-#define LCD_GPIO_SDA_PORT	GPIOA
-#define LCD_GPIO_SDA		GPIO_Pin_15
+#define LCD_GPIO_SDA_PORT	GPIOC
+#define LCD_GPIO_SDA		GPIO_Pin_10
 
-
+#if 1
 #define LCD_RST_1()  LCD_GPIO_RST_PORT->BSRR = LCD_GPIO_RST	
 #define LCD_RST_0()  LCD_GPIO_RST_PORT->BRR = LCD_GPIO_RST
 
@@ -34,6 +35,23 @@
 #define LCD_SDA_1()  LCD_GPIO_SDA_PORT->BSRR = LCD_GPIO_SDA 
 #define LCD_SDA_0()  LCD_GPIO_SDA_PORT->BRR = LCD_GPIO_SDA 
 
+
+#else
+#define LCD_RST_1()  rt_pin_write(54,PIN_HIGH)      // LCD_GPIO_RST_PORT->BSRR = LCD_GPIO_RST	
+#define LCD_RST_0()  rt_pin_write(54,PIN_LOW)      //LCD_GPIO_RST_PORT->BRR = LCD_GPIO_RST
+
+#define LCD_CS_1()  rt_pin_write(55,PIN_HIGH)       //LCD_GPIO_CS_PORT->BSRR = LCD_GPIO_CS
+#define LCD_CS_0()  rt_pin_write(55,PIN_LOW)       //LCD_GPIO_CS_PORT->BRR = LCD_GPIO_CS
+
+#define LCD_CD_1()  rt_pin_write(53,PIN_HIGH)       //LCD_GPIO_CD_PORT->BSRR = LCD_GPIO_CD
+#define LCD_CD_0()  rt_pin_write(53,PIN_LOW)       //LCD_GPIO_CD_PORT->BRR = LCD_GPIO_CD
+
+#define LCD_SCK_1()  rt_pin_write(52,PIN_HIGH)      //LCD_GPIO_SCK_PORT->BSRR = LCD_GPIO_SCK 
+#define LCD_SCK_0()  rt_pin_write(52,PIN_LOW)      //LCD_GPIO_SCK_PORT->BRR = LCD_GPIO_SCK 
+
+#define LCD_SDA_1()  rt_pin_write(51,PIN_HIGH)      //LCD_GPIO_SDA_PORT->BSRR = LCD_GPIO_SDA 
+#define LCD_SDA_0()  rt_pin_write(51,PIN_LOW)      //LCD_GPIO_SDA_PORT->BRR = LCD_GPIO_SDA 
+#endif
 // frame buffer
 static uint8_t lcd_buf[8][128];
 
@@ -123,7 +141,7 @@ void lcd_init()
 	delay(5);
 	transfer_cmd(0x23);		// ????? 0x20-0x27
 	transfer_cmd(0x81);		// ?????
-	transfer_cmd(25);		// default contrast
+	transfer_cmd(30);		// default contrast
 	transfer_cmd(0xa2);
 	if(global.is_disp_reverse == 0)
     {
@@ -149,7 +167,14 @@ void LCD_PortConfig(void)
     GPIO_PinRemapConfig(GPIO_Remap_SWJ_NoJTRST,ENABLE);
     GPIO_PinRemapConfig(GPIO_Remap_SWJ_JTAGDisable,ENABLE);     //GPIO_Remap_SWJ_JTAGDisable,GPIO_Remap_SWJ_Disable
     
-	RCC_APB2PeriphClockCmd( RCC_APB2Periph_GPIOA | RCC_APB2Periph_GPIOC | RCC_APB2Periph_GPIOD ,ENABLE);
+//    rt_pin_mode(50, PIN_MODE_OUTPUT);
+//    rt_pin_mode(51, PIN_MODE_OUTPUT);
+//    rt_pin_mode(52, PIN_MODE_OUTPUT);
+//    rt_pin_mode(53, PIN_MODE_OUTPUT);
+//    rt_pin_mode(54, PIN_MODE_OUTPUT);
+//    rt_pin_mode(55, PIN_MODE_OUTPUT);
+    
+	RCC_APB2PeriphClockCmd( RCC_APB2Periph_GPIOA | RCC_APB2Periph_GPIOB| RCC_APB2Periph_GPIOC | RCC_APB2Periph_GPIOD ,ENABLE);
 	
 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_10 | GPIO_Pin_11 | GPIO_Pin_12;
     GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;    
@@ -158,6 +183,9 @@ void LCD_PortConfig(void)
 	
     GPIO_InitStructure.GPIO_Pin = GPIO_Pin_15;
     GPIO_Init(GPIOA, &GPIO_InitStructure);
+    
+    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_3;
+    GPIO_Init(GPIOB, &GPIO_InitStructure);
     
     GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2;
     GPIO_Init(GPIOD, &GPIO_InitStructure);

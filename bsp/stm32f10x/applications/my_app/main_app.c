@@ -28,7 +28,7 @@ static void main_thread_entry(void* parameter)
 	global.is_disp_reverse = 0;     // 1
     
 	rt_hw_lcd_init();
-
+    
 	rt_hw_fm24cl16_init("mb85","i2c1");
 	mb85_bus = rt_device_find("mb85");
     rt_device_open(mb85_bus, RT_DEVICE_OFLAG_RDWR | RT_DEVICE_FLAG_STREAM );
@@ -58,10 +58,10 @@ static void modbus_app_thread_entry(void* parameter)
     {
 #if 1        
         eMBMasterReqReadHoldingRegister(1,0x100,37,RT_WAITING_FOREVER);
-        rt_thread_delay( RT_TICK_PER_SECOND / 2 );
+        rt_thread_delay( RT_TICK_PER_SECOND * 30);
         
         eMBMasterReqReadHoldingRegister(1,0x200,29,RT_WAITING_FOREVER);
-        rt_thread_delay( RT_TICK_PER_SECOND / 2);
+        rt_thread_delay( RT_TICK_PER_SECOND * 30);
 #endif  
         usModbusUserData[1] += 1;
         //eMBMasterReqWriteMultipleHoldingRegister(1,0x100,2,usModbusUserData,RT_WAITING_FOREVER); 
@@ -102,7 +102,7 @@ static void modbus_m_thread_entry(void* parameter)
     
     rt_thread_delay(RT_TICK_PER_SECOND / 100);
     
-    eMBMasterInit(MB_RTU,/* 2 */ 3, 9600,  MB_PAR_NONE);           // 2
+    eMBMasterInit(MB_RTU, 2 ,9600,  MB_PAR_NONE);           
 	eMBMasterEnable();
     while(1)
     {

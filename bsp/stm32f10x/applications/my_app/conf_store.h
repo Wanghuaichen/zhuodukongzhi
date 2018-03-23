@@ -46,6 +46,9 @@ typedef struct
     uint8_t comm_device_id;
     uint8_t zhuodu_addr;
     
+    uint8_t relay_1_alarm_type;
+    uint8_t relay_2_alarm_type;
+    
     uint8_t unit;
     int16_t temp_compensate;
     uint32_t serial_no;
