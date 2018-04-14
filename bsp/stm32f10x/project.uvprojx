@@ -82,7 +82,7 @@
           <AfterMake>
             <RunUserProg1>1</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name>fromelf --bin !L --output rtthread.bin</UserProg1Name>
+            <UserProg1Name>fromelf --bin !L --output zhuodu.bin</UserProg1Name>
             <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
@@ -419,6 +419,11 @@
               <FileName>12864_ui.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\applications\my_app\12864_ui.c</FilePath>
+            </File>
+            <File>
+              <FileName>zhuodu_misc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\applications\my_app\zhuodu_misc.c</FilePath>
             </File>
           </Files>
         </Group>

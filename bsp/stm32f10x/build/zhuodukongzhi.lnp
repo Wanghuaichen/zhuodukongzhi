@@ -7,6 +7,7 @@
 ".\build\factory_setting.o"
 ".\build\main_app.o"
 ".\build\12864_ui.o"
+".\build\zhuodu_misc.o"
 ".\build\board.o"
 ".\build\stm32f10x_it.o"
 ".\build\usart.o"
