@@ -79,8 +79,8 @@ I (Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_tim.h)(0x59E044C6)
 I (Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_usart.h)(0x59E044C6)
 I (Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_wwdg.h)(0x59E044C6)
 I (Libraries\STM32F10x_StdPeriph_Driver\inc\misc.h)(0x59E044C6)
-F (.\applications\my_app\global.c)(0x5AB514D0)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -W -O0 -Otime --apcs=interwork --split_sections -I . -I ..\..\components\CMSIS\Include -I ..\..\components\drivers\include -I ..\..\components\finsh -I ..\..\components\init -I ..\..\include -I ..\..\libcpu\arm\common -I ..\..\libcpu\arm\cortex-m3 -I Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I Libraries\STM32F10x_StdPeriph_Driver\inc -I applications -I drivers -I .\applications\my_app -I .\drivers\my_driver -I ..\..\components\drivers -I ..\..\components\net\freemodbus\port -I ..\..\components\net\freemodbus\modbus\ascii -I ..\..\components\net\freemodbus\modbus\include -I ..\..\components\net\freemodbus\modbus\rtu --locale=english-I.\RTE\_rtthread-stm32-IC:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-IC:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER -DSYSCLK_FREQ_56MHz-o .\build\global.o --omf_browse .\build\global.crf --depend .\build\global.d)
-I (applications\my_app\global.h)(0x5AB51A99)
+F (.\applications\my_app\global.c)(0x5AB9F7CA)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -W -O0 -Otime --apcs=interwork --split_sections -I . -I ..\..\components\CMSIS\Include -I ..\..\components\drivers\include -I ..\..\components\finsh -I ..\..\components\init -I ..\..\include -I ..\..\libcpu\arm\common -I ..\..\libcpu\arm\cortex-m3 -I Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I Libraries\STM32F10x_StdPeriph_Driver\inc -I applications -I drivers -I .\applications\my_app -I .\drivers\my_driver -I ..\..\components\drivers -I ..\..\components\net\freemodbus\port -I ..\..\components\net\freemodbus\modbus\ascii -I ..\..\components\net\freemodbus\modbus\include -I ..\..\components\net\freemodbus\modbus\rtu --locale=english-I.\RTE\_rtthread-stm32-IC:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-IC:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER -DSYSCLK_FREQ_56MHz-o .\build\global.o --omf_browse .\build\global.crf --depend .\build\global.d)
+I (applications\my_app\global.h)(0x5ABA1EE6)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x588B8344)
 I (..\..\include\rtthread.h)(0x59E044C6)
 I (.\rtconfig.h)(0x5A33D8B7)
@@ -92,7 +92,7 @@ I (..\..\include\rtm.h)(0x59E044C6)
 I (applications\my_app\app_config.h)(0x5A0982F5)
 I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x588B8344)
 I (C:\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x588B8344)
-I (applications\my_app\conf_store.h)(0x5AB50E5B)
+I (applications\my_app\conf_store.h)(0x5AB997EC)
 I (C:\Keil_v5\ARM\ARMCC\include\math.h)(0x588B8344)
 F (.\applications\my_app\menu_frame.c)(0x5AAE392A)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -W -O0 -Otime --apcs=interwork --split_sections -I . -I ..\..\components\CMSIS\Include -I ..\..\components\drivers\include -I ..\..\components\finsh -I ..\..\components\init -I ..\..\include -I ..\..\libcpu\arm\common -I ..\..\libcpu\arm\cortex-m3 -I Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I Libraries\STM32F10x_StdPeriph_Driver\inc -I applications -I drivers -I .\applications\my_app -I .\drivers\my_driver -I ..\..\components\drivers -I ..\..\components\net\freemodbus\port -I ..\..\components\net\freemodbus\modbus\ascii -I ..\..\components\net\freemodbus\modbus\include -I ..\..\components\net\freemodbus\modbus\rtu --locale=english-I.\RTE\_rtthread-stm32-IC:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-IC:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER -DSYSCLK_FREQ_56MHz-o .\build\menu_frame.o --omf_browse .\build\menu_frame.crf --depend .\build\menu_frame.d)
 I (applications\my_app\menu_frame.h)(0x5AAE3853)
@@ -137,7 +137,7 @@ I (Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_tim.h)(0x59E044C6)
 I (Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_usart.h)(0x59E044C6)
 I (Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_wwdg.h)(0x59E044C6)
 I (Libraries\STM32F10x_StdPeriph_Driver\inc\misc.h)(0x59E044C6)
-F (.\applications\my_app\menu_proc.c)(0x5AB50F04)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -W -O0 -Otime --apcs=interwork --split_sections -I . -I ..\..\components\CMSIS\Include -I ..\..\components\drivers\include -I ..\..\components\finsh -I ..\..\components\init -I ..\..\include -I ..\..\libcpu\arm\common -I ..\..\libcpu\arm\cortex-m3 -I Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I Libraries\STM32F10x_StdPeriph_Driver\inc -I applications -I drivers -I .\applications\my_app -I .\drivers\my_driver -I ..\..\components\drivers -I ..\..\components\net\freemodbus\port -I ..\..\components\net\freemodbus\modbus\ascii -I ..\..\components\net\freemodbus\modbus\include -I ..\..\components\net\freemodbus\modbus\rtu --locale=english-I.\RTE\_rtthread-stm32-IC:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-IC:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER -DSYSCLK_FREQ_56MHz-o .\build\menu_proc.o --omf_browse .\build\menu_proc.crf --depend .\build\menu_proc.d)
+F (.\applications\my_app\menu_proc.c)(0x5AD1A8B4)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -W -O0 -Otime --apcs=interwork --split_sections -I . -I ..\..\components\CMSIS\Include -I ..\..\components\drivers\include -I ..\..\components\finsh -I ..\..\components\init -I ..\..\include -I ..\..\libcpu\arm\common -I ..\..\libcpu\arm\cortex-m3 -I Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I Libraries\STM32F10x_StdPeriph_Driver\inc -I applications -I drivers -I .\applications\my_app -I .\drivers\my_driver -I ..\..\components\drivers -I ..\..\components\net\freemodbus\port -I ..\..\components\net\freemodbus\modbus\ascii -I ..\..\components\net\freemodbus\modbus\include -I ..\..\components\net\freemodbus\modbus\rtu --locale=english-I.\RTE\_rtthread-stm32-IC:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-IC:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER -DSYSCLK_FREQ_56MHz-o .\build\menu_proc.o --omf_browse .\build\menu_proc.crf --depend .\build\menu_proc.d)
 I (..\..\include\rtthread.h)(0x59E044C6)
 I (.\rtconfig.h)(0x5A33D8B7)
 I (..\..\include\rtdebug.h)(0x59E044C6)
@@ -183,16 +183,16 @@ I (Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_usart.h)(0x59E044C6)
 I (Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_wwdg.h)(0x59E044C6)
 I (Libraries\STM32F10x_StdPeriph_Driver\inc\misc.h)(0x59E044C6)
 I (.\drivers\my_driver\bsp_button.h)(0x5AAE2033)
-I (applications\my_app\global.h)(0x5AB51A99)
+I (applications\my_app\global.h)(0x5ABA1EE6)
 I (applications\my_app\app_config.h)(0x5A0982F5)
 I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x588B8344)
 I (C:\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x588B8344)
 I (applications\my_app\menu_frame.h)(0x5AAE3853)
 I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x588B8344)
 I (applications\my_app\menu_proc.h)(0x59FEFAC5)
-I (applications\my_app\conf_store.h)(0x5AB50E5B)
+I (applications\my_app\conf_store.h)(0x5AB997EC)
 I (C:\Keil_v5\ARM\ARMCC\include\math.h)(0x588B8344)
-I (applications\my_app\12864_ui.h)(0x5A4C3665)
+I (applications\my_app\12864_ui.h)(0x5AB7AFDF)
 I (..\..\components\net\freemodbus\modbus\include\mb.h)(0x59E044C6)
 I (..\..\components\net\freemodbus\port\port.h)(0x59E044C6)
 I (..\..\components\net\freemodbus\modbus\include\mbconfig.h)(0x5A3DFA20)
@@ -202,12 +202,13 @@ I (C:\Keil_v5\ARM\ARMCC\include\inttypes.h)(0x588B8344)
 I (..\..\components\net\freemodbus\modbus\include\mbport.h)(0x59E044C6)
 I (..\..\components\net\freemodbus\modbus\include\mbproto.h)(0x59E044C6)
 I (..\..\components\net\freemodbus\modbus\include\mb_m.h)(0x59E044C6)
-F (.\applications\my_app\factory_setting.c)(0x5AB510F3)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -W -O0 -Otime --apcs=interwork --split_sections -I . -I ..\..\components\CMSIS\Include -I ..\..\components\drivers\include -I ..\..\components\finsh -I ..\..\components\init -I ..\..\include -I ..\..\libcpu\arm\common -I ..\..\libcpu\arm\cortex-m3 -I Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I Libraries\STM32F10x_StdPeriph_Driver\inc -I applications -I drivers -I .\applications\my_app -I .\drivers\my_driver -I ..\..\components\drivers -I ..\..\components\net\freemodbus\port -I ..\..\components\net\freemodbus\modbus\ascii -I ..\..\components\net\freemodbus\modbus\include -I ..\..\components\net\freemodbus\modbus\rtu --locale=english-I.\RTE\_rtthread-stm32-IC:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-IC:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER -DSYSCLK_FREQ_56MHz-o .\build\factory_setting.o --omf_browse .\build\factory_setting.crf --depend .\build\factory_setting.d)
+I (applications\my_app\modbus_send_msg.h)(0x5ACE0C3D)
+F (.\applications\my_app\factory_setting.c)(0x5AB997FC)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -W -O0 -Otime --apcs=interwork --split_sections -I . -I ..\..\components\CMSIS\Include -I ..\..\components\drivers\include -I ..\..\components\finsh -I ..\..\components\init -I ..\..\include -I ..\..\libcpu\arm\common -I ..\..\libcpu\arm\cortex-m3 -I Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I Libraries\STM32F10x_StdPeriph_Driver\inc -I applications -I drivers -I .\applications\my_app -I .\drivers\my_driver -I ..\..\components\drivers -I ..\..\components\net\freemodbus\port -I ..\..\components\net\freemodbus\modbus\ascii -I ..\..\components\net\freemodbus\modbus\include -I ..\..\components\net\freemodbus\modbus\rtu --locale=english-I.\RTE\_rtthread-stm32-IC:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-IC:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER -DSYSCLK_FREQ_56MHz-o .\build\factory_setting.o --omf_browse .\build\factory_setting.crf --depend .\build\factory_setting.d)
 I (applications\my_app\app_config.h)(0x5A0982F5)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x588B8344)
 I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x588B8344)
 I (C:\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x588B8344)
-I (applications\my_app\global.h)(0x5AB51A99)
+I (applications\my_app\global.h)(0x5ABA1EE6)
 I (..\..\include\rtthread.h)(0x59E044C6)
 I (.\rtconfig.h)(0x5A33D8B7)
 I (..\..\include\rtdebug.h)(0x59E044C6)
@@ -215,9 +216,9 @@ I (..\..\include\rtdef.h)(0x59E21647)
 I (C:\Keil_v5\ARM\ARMCC\include\stdarg.h)(0x588B8344)
 I (..\..\include\rtservice.h)(0x59E044C6)
 I (..\..\include\rtm.h)(0x59E044C6)
-I (applications\my_app\conf_store.h)(0x5AB50E5B)
+I (applications\my_app\conf_store.h)(0x5AB997EC)
 I (C:\Keil_v5\ARM\ARMCC\include\math.h)(0x588B8344)
-F (.\applications\my_app\main_app.c)(0x5AB5193A)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -W -O0 -Otime --apcs=interwork --split_sections -I . -I ..\..\components\CMSIS\Include -I ..\..\components\drivers\include -I ..\..\components\finsh -I ..\..\components\init -I ..\..\include -I ..\..\libcpu\arm\common -I ..\..\libcpu\arm\cortex-m3 -I Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I Libraries\STM32F10x_StdPeriph_Driver\inc -I applications -I drivers -I .\applications\my_app -I .\drivers\my_driver -I ..\..\components\drivers -I ..\..\components\net\freemodbus\port -I ..\..\components\net\freemodbus\modbus\ascii -I ..\..\components\net\freemodbus\modbus\include -I ..\..\components\net\freemodbus\modbus\rtu --locale=english-I.\RTE\_rtthread-stm32-IC:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-IC:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER -DSYSCLK_FREQ_56MHz-o .\build\main_app.o --omf_browse .\build\main_app.crf --depend .\build\main_app.d)
+F (.\applications\my_app\main_app.c)(0x5AD1AD88)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -W -O0 -Otime --apcs=interwork --split_sections -I . -I ..\..\components\CMSIS\Include -I ..\..\components\drivers\include -I ..\..\components\finsh -I ..\..\components\init -I ..\..\include -I ..\..\libcpu\arm\common -I ..\..\libcpu\arm\cortex-m3 -I Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I Libraries\STM32F10x_StdPeriph_Driver\inc -I applications -I drivers -I .\applications\my_app -I .\drivers\my_driver -I ..\..\components\drivers -I ..\..\components\net\freemodbus\port -I ..\..\components\net\freemodbus\modbus\ascii -I ..\..\components\net\freemodbus\modbus\include -I ..\..\components\net\freemodbus\modbus\rtu --locale=english-I.\RTE\_rtthread-stm32-IC:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-IC:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER -DSYSCLK_FREQ_56MHz-o .\build\main_app.o --omf_browse .\build\main_app.crf --depend .\build\main_app.d)
 I (drivers\board.h)(0x5A1A744B)
 I (Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h)(0x59E044C6)
 I (..\..\components\CMSIS\Include\core_cm3.h)(0x59E044C6)
@@ -262,11 +263,11 @@ I (..\..\components\drivers\include\drivers/i2c.h)(0x59E044C6)
 I (..\..\components\drivers\include\drivers/i2c_dev.h)(0x59E044C6)
 I (..\..\components\drivers\include\drivers/i2c-bit-ops.h)(0x59E044C6)
 I (..\..\components\drivers\include\drivers/pin.h)(0x59E044C6)
-I (applications\my_app\global.h)(0x5AB51A99)
+I (applications\my_app\global.h)(0x5ABA1EE6)
 I (applications\my_app\app_config.h)(0x5A0982F5)
 I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x588B8344)
 I (C:\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x588B8344)
-I (.\drivers\my_driver\platform_config.h)(0x5AB50C56)
+I (.\drivers\my_driver\platform_config.h)(0x5AD1AD92)
 I (.\drivers\my_driver\lcd12864.h)(0x5AACFFB9)
 I (.\drivers\my_driver\bsp_button.h)(0x5AAE2033)
 I (applications\my_app\menu_frame.h)(0x5AAE3853)
@@ -282,7 +283,8 @@ I (C:\Keil_v5\ARM\ARMCC\include\inttypes.h)(0x588B8344)
 I (..\..\components\net\freemodbus\modbus\include\mbport.h)(0x59E044C6)
 I (..\..\components\net\freemodbus\modbus\include\mbproto.h)(0x59E044C6)
 I (..\..\components\net\freemodbus\modbus\include\mb_m.h)(0x59E044C6)
-F (.\applications\my_app\12864_ui.c)(0x5A4C4631)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -W -O0 -Otime --apcs=interwork --split_sections -I . -I ..\..\components\CMSIS\Include -I ..\..\components\drivers\include -I ..\..\components\finsh -I ..\..\components\init -I ..\..\include -I ..\..\libcpu\arm\common -I ..\..\libcpu\arm\cortex-m3 -I Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I Libraries\STM32F10x_StdPeriph_Driver\inc -I applications -I drivers -I .\applications\my_app -I .\drivers\my_driver -I ..\..\components\drivers -I ..\..\components\net\freemodbus\port -I ..\..\components\net\freemodbus\modbus\ascii -I ..\..\components\net\freemodbus\modbus\include -I ..\..\components\net\freemodbus\modbus\rtu --locale=english-I.\RTE\_rtthread-stm32-IC:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-IC:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER -DSYSCLK_FREQ_56MHz-o .\build\12864_ui.o --omf_browse .\build\12864_ui.crf --depend .\build\12864_ui.d)
+I (applications\my_app\modbus_send_msg.h)(0x5ACE0C3D)
+F (.\applications\my_app\12864_ui.c)(0x5ABA4F98)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -W -O0 -Otime --apcs=interwork --split_sections -I . -I ..\..\components\CMSIS\Include -I ..\..\components\drivers\include -I ..\..\components\finsh -I ..\..\components\init -I ..\..\include -I ..\..\libcpu\arm\common -I ..\..\libcpu\arm\cortex-m3 -I Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I Libraries\STM32F10x_StdPeriph_Driver\inc -I applications -I drivers -I .\applications\my_app -I .\drivers\my_driver -I ..\..\components\drivers -I ..\..\components\net\freemodbus\port -I ..\..\components\net\freemodbus\modbus\ascii -I ..\..\components\net\freemodbus\modbus\include -I ..\..\components\net\freemodbus\modbus\rtu --locale=english-I.\RTE\_rtthread-stm32-IC:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-IC:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER -DSYSCLK_FREQ_56MHz-o .\build\12864_ui.o --omf_browse .\build\12864_ui.crf --depend .\build\12864_ui.d)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x588B8344)
 I (.\drivers\my_driver\lcd12864.h)(0x5AACFFB9)
 I (Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h)(0x59E044C6)
@@ -314,7 +316,7 @@ I (Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_tim.h)(0x59E044C6)
 I (Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_usart.h)(0x59E044C6)
 I (Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_wwdg.h)(0x59E044C6)
 I (Libraries\STM32F10x_StdPeriph_Driver\inc\misc.h)(0x59E044C6)
-I (applications\my_app\12864_ui.h)(0x5A4C3665)
+I (applications\my_app\12864_ui.h)(0x5AB7AFDF)
 I (.\drivers\my_driver\bsp_button.h)(0x5AAE2033)
 I (..\..\include\rtthread.h)(0x59E044C6)
 I (.\rtconfig.h)(0x5A33D8B7)
@@ -323,7 +325,25 @@ I (..\..\include\rtdef.h)(0x59E21647)
 I (C:\Keil_v5\ARM\ARMCC\include\stdarg.h)(0x588B8344)
 I (..\..\include\rtservice.h)(0x59E044C6)
 I (..\..\include\rtm.h)(0x59E044C6)
-F (.\applications\my_app\formula.c)(0x5AAD0375)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -W -O0 -Otime --apcs=interwork --split_sections -I . -I ..\..\components\CMSIS\Include -I ..\..\components\drivers\include -I ..\..\components\finsh -I ..\..\components\init -I ..\..\include -I ..\..\libcpu\arm\common -I ..\..\libcpu\arm\cortex-m3 -I Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I Libraries\STM32F10x_StdPeriph_Driver\inc -I applications -I drivers -I .\applications\my_app -I .\drivers\my_driver -I ..\..\components\drivers -I ..\..\components\net\freemodbus\port -I ..\..\components\net\freemodbus\modbus\ascii -I ..\..\components\net\freemodbus\modbus\include -I ..\..\components\net\freemodbus\modbus\rtu --locale=english-I.\RTE\_rtthread-stm32-IC:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-IC:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER -DSYSCLK_FREQ_56MHz-o .\build\formula.o --omf_browse .\build\formula.crf --depend .\build\formula.d)
+F (.\applications\my_app\zhuodu_misc.c)(0x5AB90C28)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -W -O0 -Otime --apcs=interwork --split_sections -I . -I ..\..\components\CMSIS\Include -I ..\..\components\drivers\include -I ..\..\components\finsh -I ..\..\components\init -I ..\..\include -I ..\..\libcpu\arm\common -I ..\..\libcpu\arm\cortex-m3 -I Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I Libraries\STM32F10x_StdPeriph_Driver\inc -I applications -I drivers -I .\applications\my_app -I .\drivers\my_driver -I ..\..\components\drivers -I ..\..\components\net\freemodbus\port -I ..\..\components\net\freemodbus\modbus\ascii -I ..\..\components\net\freemodbus\modbus\include -I ..\..\components\net\freemodbus\modbus\rtu --locale=english-I.\RTE\_rtthread-stm32-IC:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-IC:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER -DSYSCLK_FREQ_56MHz-o .\build\zhuodu_misc.o --omf_browse .\build\zhuodu_misc.crf --depend .\build\zhuodu_misc.d)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x588B8344)
+I (..\..\include\rtthread.h)(0x59E044C6)
+I (.\rtconfig.h)(0x5A33D8B7)
+I (..\..\include\rtdebug.h)(0x59E044C6)
+I (..\..\include\rtdef.h)(0x59E21647)
+I (C:\Keil_v5\ARM\ARMCC\include\stdarg.h)(0x588B8344)
+I (..\..\include\rtservice.h)(0x59E044C6)
+I (..\..\include\rtm.h)(0x59E044C6)
+I (applications\my_app\global.h)(0x5ABA1EE6)
+I (applications\my_app\app_config.h)(0x5A0982F5)
+I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x588B8344)
+I (C:\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x588B8344)
+I (..\..\components\drivers\include\rtdevice.h)(0x59E044C6)
+I (..\..\components\drivers\include\drivers/serial.h)(0x59E044C6)
+I (..\..\components\drivers\include\drivers/i2c.h)(0x59E044C6)
+I (..\..\components\drivers\include\drivers/i2c_dev.h)(0x59E044C6)
+I (..\..\components\drivers\include\drivers/i2c-bit-ops.h)(0x59E044C6)
+I (..\..\components\drivers\include\drivers/pin.h)(0x59E044C6)
 F (drivers\board.c)(0x59E044C6)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -W -O0 -Otime --apcs=interwork --split_sections -I . -I ..\..\components\CMSIS\Include -I ..\..\components\drivers\include -I ..\..\components\finsh -I ..\..\components\init -I ..\..\include -I ..\..\libcpu\arm\common -I ..\..\libcpu\arm\cortex-m3 -I Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I Libraries\STM32F10x_StdPeriph_Driver\inc -I applications -I drivers -I .\applications\my_app -I .\drivers\my_driver -I ..\..\components\drivers -I ..\..\components\net\freemodbus\port -I ..\..\components\net\freemodbus\modbus\ascii -I ..\..\components\net\freemodbus\modbus\include -I ..\..\components\net\freemodbus\modbus\rtu --locale=english-I.\RTE\_rtthread-stm32-IC:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-IC:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER -DSYSCLK_FREQ_56MHz-o .\build\board.o --omf_browse .\build\board.crf --depend .\build\board.d)
 I (..\..\include\rthw.h)(0x59E044C6)
 I (..\..\include\rtthread.h)(0x59E044C6)
@@ -500,7 +520,7 @@ I (Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_usart.h)(0x59E044C6)
 I (Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_wwdg.h)(0x59E044C6)
 I (Libraries\STM32F10x_StdPeriph_Driver\inc\misc.h)(0x59E044C6)
 I (drivers\gpio.h)(0x59E044C6)
-F (.\drivers\my_driver\lcd12864.c)(0x5AB4FD5F)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -W -O0 -Otime --apcs=interwork --split_sections -I . -I ..\..\components\CMSIS\Include -I ..\..\components\drivers\include -I ..\..\components\finsh -I ..\..\components\init -I ..\..\include -I ..\..\libcpu\arm\common -I ..\..\libcpu\arm\cortex-m3 -I Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I Libraries\STM32F10x_StdPeriph_Driver\inc -I applications -I drivers -I .\applications\my_app -I .\drivers\my_driver -I ..\..\components\drivers -I ..\..\components\net\freemodbus\port -I ..\..\components\net\freemodbus\modbus\ascii -I ..\..\components\net\freemodbus\modbus\include -I ..\..\components\net\freemodbus\modbus\rtu --locale=english-I.\RTE\_rtthread-stm32-IC:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-IC:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER -DSYSCLK_FREQ_56MHz-o .\build\lcd12864.o --omf_browse .\build\lcd12864.crf --depend .\build\lcd12864.d)
+F (.\drivers\my_driver\lcd12864.c)(0x5AD1AD81)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -W -O0 -Otime --apcs=interwork --split_sections -I . -I ..\..\components\CMSIS\Include -I ..\..\components\drivers\include -I ..\..\components\finsh -I ..\..\components\init -I ..\..\include -I ..\..\libcpu\arm\common -I ..\..\libcpu\arm\cortex-m3 -I Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I Libraries\STM32F10x_StdPeriph_Driver\inc -I applications -I drivers -I .\applications\my_app -I .\drivers\my_driver -I ..\..\components\drivers -I ..\..\components\net\freemodbus\port -I ..\..\components\net\freemodbus\modbus\ascii -I ..\..\components\net\freemodbus\modbus\include -I ..\..\components\net\freemodbus\modbus\rtu --locale=english-I.\RTE\_rtthread-stm32-IC:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-IC:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER -DSYSCLK_FREQ_56MHz-o .\build\lcd12864.o --omf_browse .\build\lcd12864.crf --depend .\build\lcd12864.d)
 I (drivers\my_driver\lcd12864.h)(0x5AACFFB9)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x588B8344)
 I (Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h)(0x59E044C6)
@@ -533,7 +553,7 @@ I (Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_usart.h)(0x59E044C6)
 I (Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_wwdg.h)(0x59E044C6)
 I (Libraries\STM32F10x_StdPeriph_Driver\inc\misc.h)(0x59E044C6)
 I (drivers\my_driver\fonts.h)(0x59FC7456)
-I (.\applications\my_app\global.h)(0x5AB51A99)
+I (.\applications\my_app\global.h)(0x5ABA1EE6)
 I (..\..\include\rtthread.h)(0x59E044C6)
 I (.\rtconfig.h)(0x5A33D8B7)
 I (..\..\include\rtdebug.h)(0x59E044C6)
@@ -551,10 +571,10 @@ I (..\..\components\drivers\include\drivers/i2c_dev.h)(0x59E044C6)
 I (..\..\components\drivers\include\drivers/i2c-bit-ops.h)(0x59E044C6)
 I (..\..\components\drivers\include\drivers/pin.h)(0x59E044C6)
 F (.\drivers\my_driver\ASC16.c)(0x59302FC4)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -W -O0 -Otime --apcs=interwork --split_sections -I . -I ..\..\components\CMSIS\Include -I ..\..\components\drivers\include -I ..\..\components\finsh -I ..\..\components\init -I ..\..\include -I ..\..\libcpu\arm\common -I ..\..\libcpu\arm\cortex-m3 -I Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I Libraries\STM32F10x_StdPeriph_Driver\inc -I applications -I drivers -I .\applications\my_app -I .\drivers\my_driver -I ..\..\components\drivers -I ..\..\components\net\freemodbus\port -I ..\..\components\net\freemodbus\modbus\ascii -I ..\..\components\net\freemodbus\modbus\include -I ..\..\components\net\freemodbus\modbus\rtu --locale=english-I.\RTE\_rtthread-stm32-IC:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-IC:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER -DSYSCLK_FREQ_56MHz-o .\build\asc16.o --omf_browse .\build\asc16.crf --depend .\build\asc16.d)
-F (.\drivers\my_driver\hz_fonts.c)(0x5AAE37A9)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -W -O0 -Otime --apcs=interwork --split_sections -I . -I ..\..\components\CMSIS\Include -I ..\..\components\drivers\include -I ..\..\components\finsh -I ..\..\components\init -I ..\..\include -I ..\..\libcpu\arm\common -I ..\..\libcpu\arm\cortex-m3 -I Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I Libraries\STM32F10x_StdPeriph_Driver\inc -I applications -I drivers -I .\applications\my_app -I .\drivers\my_driver -I ..\..\components\drivers -I ..\..\components\net\freemodbus\port -I ..\..\components\net\freemodbus\modbus\ascii -I ..\..\components\net\freemodbus\modbus\include -I ..\..\components\net\freemodbus\modbus\rtu --locale=english-I.\RTE\_rtthread-stm32-IC:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-IC:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER -DSYSCLK_FREQ_56MHz-o .\build\hz_fonts.o --omf_browse .\build\hz_fonts.crf --depend .\build\hz_fonts.d)
+F (.\drivers\my_driver\hz_fonts.c)(0x5ABA5299)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -W -O0 -Otime --apcs=interwork --split_sections -I . -I ..\..\components\CMSIS\Include -I ..\..\components\drivers\include -I ..\..\components\finsh -I ..\..\components\init -I ..\..\include -I ..\..\libcpu\arm\common -I ..\..\libcpu\arm\cortex-m3 -I Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I Libraries\STM32F10x_StdPeriph_Driver\inc -I applications -I drivers -I .\applications\my_app -I .\drivers\my_driver -I ..\..\components\drivers -I ..\..\components\net\freemodbus\port -I ..\..\components\net\freemodbus\modbus\ascii -I ..\..\components\net\freemodbus\modbus\include -I ..\..\components\net\freemodbus\modbus\rtu --locale=english-I.\RTE\_rtthread-stm32-IC:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-IC:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER -DSYSCLK_FREQ_56MHz-o .\build\hz_fonts.o --omf_browse .\build\hz_fonts.crf --depend .\build\hz_fonts.d)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x588B8344)
 I (drivers\my_driver\fonts.h)(0x59FC7456)
-I (.\applications\my_app\global.h)(0x5AB51A99)
+I (.\applications\my_app\global.h)(0x5ABA1EE6)
 I (..\..\include\rtthread.h)(0x59E044C6)
 I (.\rtconfig.h)(0x5A33D8B7)
 I (..\..\include\rtdebug.h)(0x59E044C6)
@@ -567,7 +587,7 @@ I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x588B8344)
 I (C:\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x588B8344)
 F (.\drivers\my_driver\bsp_button.c)(0x5AAE3513)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -W -O0 -Otime --apcs=interwork --split_sections -I . -I ..\..\components\CMSIS\Include -I ..\..\components\drivers\include -I ..\..\components\finsh -I ..\..\components\init -I ..\..\include -I ..\..\libcpu\arm\common -I ..\..\libcpu\arm\cortex-m3 -I Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I Libraries\STM32F10x_StdPeriph_Driver\inc -I applications -I drivers -I .\applications\my_app -I .\drivers\my_driver -I ..\..\components\drivers -I ..\..\components\net\freemodbus\port -I ..\..\components\net\freemodbus\modbus\ascii -I ..\..\components\net\freemodbus\modbus\include -I ..\..\components\net\freemodbus\modbus\rtu --locale=english-I.\RTE\_rtthread-stm32-IC:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-IC:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER -DSYSCLK_FREQ_56MHz-o .\build\bsp_button.o --omf_browse .\build\bsp_button.crf --depend .\build\bsp_button.d)
 I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x588B8344)
-I (drivers\my_driver\platform_config.h)(0x5AB50C56)
+I (drivers\my_driver\platform_config.h)(0x5AD1AD92)
 I (Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h)(0x59E044C6)
 I (..\..\components\CMSIS\Include\core_cm3.h)(0x59E044C6)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x588B8344)
@@ -606,7 +626,7 @@ I (..\..\include\rtdef.h)(0x59E21647)
 I (C:\Keil_v5\ARM\ARMCC\include\stdarg.h)(0x588B8344)
 I (..\..\include\rtservice.h)(0x59E044C6)
 I (..\..\include\rtm.h)(0x59E044C6)
-F (..\..\components\drivers\i2c\fm24clxx.c)(0x5A33D34A)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -W -O0 -Otime --apcs=interwork --split_sections -I . -I ..\..\components\CMSIS\Include -I ..\..\components\drivers\include -I ..\..\components\finsh -I ..\..\components\init -I ..\..\include -I ..\..\libcpu\arm\common -I ..\..\libcpu\arm\cortex-m3 -I Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I Libraries\STM32F10x_StdPeriph_Driver\inc -I applications -I drivers -I .\applications\my_app -I .\drivers\my_driver -I ..\..\components\drivers -I ..\..\components\net\freemodbus\port -I ..\..\components\net\freemodbus\modbus\ascii -I ..\..\components\net\freemodbus\modbus\include -I ..\..\components\net\freemodbus\modbus\rtu --locale=english-I.\RTE\_rtthread-stm32-IC:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-IC:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER -DSYSCLK_FREQ_56MHz-o .\build\fm24clxx.o --omf_browse .\build\fm24clxx.crf --depend .\build\fm24clxx.d)
+F (..\..\components\drivers\i2c\fm24clxx.c)(0x5ABAF9C7)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -W -O0 -Otime --apcs=interwork --split_sections -I . -I ..\..\components\CMSIS\Include -I ..\..\components\drivers\include -I ..\..\components\finsh -I ..\..\components\init -I ..\..\include -I ..\..\libcpu\arm\common -I ..\..\libcpu\arm\cortex-m3 -I Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I Libraries\STM32F10x_StdPeriph_Driver\inc -I applications -I drivers -I .\applications\my_app -I .\drivers\my_driver -I ..\..\components\drivers -I ..\..\components\net\freemodbus\port -I ..\..\components\net\freemodbus\modbus\ascii -I ..\..\components\net\freemodbus\modbus\include -I ..\..\components\net\freemodbus\modbus\rtu --locale=english-I.\RTE\_rtthread-stm32-IC:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-IC:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER -DSYSCLK_FREQ_56MHz-o .\build\fm24clxx.o --omf_browse .\build\fm24clxx.crf --depend .\build\fm24clxx.d)
 I (..\..\include\rtthread.h)(0x59E044C6)
 I (.\rtconfig.h)(0x5A33D8B7)
 I (..\..\include\rtdebug.h)(0x59E044C6)
@@ -664,7 +684,7 @@ I (..\..\components\drivers\include\drivers/i2c_dev.h)(0x59E044C6)
 I (..\..\components\drivers\include\drivers/i2c-bit-ops.h)(0x59E044C6)
 I (..\..\components\drivers\include\drivers/pin.h)(0x59E044C6)
 F (.\drivers\i2c_soft.c)(0x59FEE057)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -W -O0 -Otime --apcs=interwork --split_sections -I . -I ..\..\components\CMSIS\Include -I ..\..\components\drivers\include -I ..\..\components\finsh -I ..\..\components\init -I ..\..\include -I ..\..\libcpu\arm\common -I ..\..\libcpu\arm\cortex-m3 -I Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I Libraries\STM32F10x_StdPeriph_Driver\inc -I applications -I drivers -I .\applications\my_app -I .\drivers\my_driver -I ..\..\components\drivers -I ..\..\components\net\freemodbus\port -I ..\..\components\net\freemodbus\modbus\ascii -I ..\..\components\net\freemodbus\modbus\include -I ..\..\components\net\freemodbus\modbus\rtu --locale=english-I.\RTE\_rtthread-stm32-IC:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-IC:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER -DSYSCLK_FREQ_56MHz-o .\build\i2c_soft.o --omf_browse .\build\i2c_soft.crf --depend .\build\i2c_soft.d)
-I (.\drivers\my_driver\platform_config.h)(0x5AB50C56)
+I (.\drivers\my_driver\platform_config.h)(0x5AD1AD92)
 I (Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h)(0x59E044C6)
 I (..\..\components\CMSIS\Include\core_cm3.h)(0x59E044C6)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x588B8344)
@@ -2621,8 +2641,8 @@ I (C:\Keil_v5\ARM\ARMCC\include\inttypes.h)(0x588B8344)
 I (..\..\components\net\freemodbus\modbus\include\mb.h)(0x59E044C6)
 I (..\..\components\net\freemodbus\modbus\include\mbport.h)(0x59E044C6)
 I (..\..\components\net\freemodbus\modbus\include\mbproto.h)(0x59E044C6)
-F (..\..\components\net\freemodbus\port\user_mb_app.c)(0x59E044C6)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -W -O0 -Otime --apcs=interwork --split_sections -I . -I ..\..\components\CMSIS\Include -I ..\..\components\drivers\include -I ..\..\components\finsh -I ..\..\components\init -I ..\..\include -I ..\..\libcpu\arm\common -I ..\..\libcpu\arm\cortex-m3 -I Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I Libraries\STM32F10x_StdPeriph_Driver\inc -I applications -I drivers -I .\applications\my_app -I .\drivers\my_driver -I ..\..\components\drivers -I ..\..\components\net\freemodbus\port -I ..\..\components\net\freemodbus\modbus\ascii -I ..\..\components\net\freemodbus\modbus\include -I ..\..\components\net\freemodbus\modbus\rtu --locale=english-I.\RTE\_rtthread-stm32-IC:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-IC:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER -DSYSCLK_FREQ_56MHz-o .\build\user_mb_app.o --omf_browse .\build\user_mb_app.crf --depend .\build\user_mb_app.d)
-I (..\..\components\net\freemodbus\port\user_mb_app.h)(0x5A3E46E2)
+F (..\..\components\net\freemodbus\port\user_mb_app.c)(0x5ABA1608)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -W -O0 -Otime --apcs=interwork --split_sections -I . -I ..\..\components\CMSIS\Include -I ..\..\components\drivers\include -I ..\..\components\finsh -I ..\..\components\init -I ..\..\include -I ..\..\libcpu\arm\common -I ..\..\libcpu\arm\cortex-m3 -I Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I Libraries\STM32F10x_StdPeriph_Driver\inc -I applications -I drivers -I .\applications\my_app -I .\drivers\my_driver -I ..\..\components\drivers -I ..\..\components\net\freemodbus\port -I ..\..\components\net\freemodbus\modbus\ascii -I ..\..\components\net\freemodbus\modbus\include -I ..\..\components\net\freemodbus\modbus\rtu --locale=english-I.\RTE\_rtthread-stm32-IC:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-IC:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER -DSYSCLK_FREQ_56MHz-o .\build\user_mb_app.o --omf_browse .\build\user_mb_app.crf --depend .\build\user_mb_app.d)
+I (..\..\components\net\freemodbus\port\user_mb_app.h)(0x5AB7A6CD)
 I (..\..\components\net\freemodbus\modbus\include\mb.h)(0x59E044C6)
 I (..\..\components\net\freemodbus\port\port.h)(0x59E044C6)
 I (drivers\stm32f10x_conf.h)(0x59E044C6)
@@ -2671,6 +2691,10 @@ I (..\..\components\net\freemodbus\modbus\include\mbproto.h)(0x59E044C6)
 I (..\..\components\net\freemodbus\modbus\include\mb_m.h)(0x59E044C6)
 I (..\..\components\net\freemodbus\modbus\include\mbframe.h)(0x59E044C6)
 I (..\..\components\net\freemodbus\modbus\include\mbutils.h)(0x59E044C6)
+I (.\applications\my_app\global.h)(0x5ABA1EE6)
+I (.\applications\my_app\app_config.h)(0x5A0982F5)
+I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x588B8344)
+I (C:\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x588B8344)
 F (..\..\components\net\freemodbus\modbus\functions\mbfunccoils_m.c)(0x59E044C6)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -W -O0 -Otime --apcs=interwork --split_sections -I . -I ..\..\components\CMSIS\Include -I ..\..\components\drivers\include -I ..\..\components\finsh -I ..\..\components\init -I ..\..\include -I ..\..\libcpu\arm\common -I ..\..\libcpu\arm\cortex-m3 -I Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I Libraries\STM32F10x_StdPeriph_Driver\inc -I applications -I drivers -I .\applications\my_app -I .\drivers\my_driver -I ..\..\components\drivers -I ..\..\components\net\freemodbus\port -I ..\..\components\net\freemodbus\modbus\ascii -I ..\..\components\net\freemodbus\modbus\include -I ..\..\components\net\freemodbus\modbus\rtu --locale=english-I.\RTE\_rtthread-stm32-IC:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-IC:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER -DSYSCLK_FREQ_56MHz-o .\build\mbfunccoils_m.o --omf_browse .\build\mbfunccoils_m.crf --depend .\build\mbfunccoils_m.d)
 I (C:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x588B8344)
 I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x588B8344)
@@ -3122,8 +3146,8 @@ I (..\..\components\net\freemodbus\modbus\include\mb.h)(0x59E044C6)
 I (..\..\components\net\freemodbus\modbus\include\mbport.h)(0x59E044C6)
 I (..\..\components\net\freemodbus\modbus\include\mbproto.h)(0x59E044C6)
 I (..\..\components\net\freemodbus\modbus\include\mb_m.h)(0x59E044C6)
-F (..\..\components\net\freemodbus\port\user_mb_app_m.c)(0x5AB51CC2)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -W -O0 -Otime --apcs=interwork --split_sections -I . -I ..\..\components\CMSIS\Include -I ..\..\components\drivers\include -I ..\..\components\finsh -I ..\..\components\init -I ..\..\include -I ..\..\libcpu\arm\common -I ..\..\libcpu\arm\cortex-m3 -I Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I Libraries\STM32F10x_StdPeriph_Driver\inc -I applications -I drivers -I .\applications\my_app -I .\drivers\my_driver -I ..\..\components\drivers -I ..\..\components\net\freemodbus\port -I ..\..\components\net\freemodbus\modbus\ascii -I ..\..\components\net\freemodbus\modbus\include -I ..\..\components\net\freemodbus\modbus\rtu --locale=english-I.\RTE\_rtthread-stm32-IC:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-IC:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER -DSYSCLK_FREQ_56MHz-o .\build\user_mb_app_m.o --omf_browse .\build\user_mb_app_m.crf --depend .\build\user_mb_app_m.d)
-I (..\..\components\net\freemodbus\port\user_mb_app.h)(0x5A3E46E2)
+F (..\..\components\net\freemodbus\port\user_mb_app_m.c)(0x5ABA1EF7)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -W -O0 -Otime --apcs=interwork --split_sections -I . -I ..\..\components\CMSIS\Include -I ..\..\components\drivers\include -I ..\..\components\finsh -I ..\..\components\init -I ..\..\include -I ..\..\libcpu\arm\common -I ..\..\libcpu\arm\cortex-m3 -I Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I Libraries\STM32F10x_StdPeriph_Driver\inc -I applications -I drivers -I .\applications\my_app -I .\drivers\my_driver -I ..\..\components\drivers -I ..\..\components\net\freemodbus\port -I ..\..\components\net\freemodbus\modbus\ascii -I ..\..\components\net\freemodbus\modbus\include -I ..\..\components\net\freemodbus\modbus\rtu --locale=english-I.\RTE\_rtthread-stm32-IC:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-IC:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER -DSYSCLK_FREQ_56MHz-o .\build\user_mb_app_m.o --omf_browse .\build\user_mb_app_m.crf --depend .\build\user_mb_app_m.d)
+I (..\..\components\net\freemodbus\port\user_mb_app.h)(0x5AB7A6CD)
 I (..\..\components\net\freemodbus\modbus\include\mb.h)(0x59E044C6)
 I (..\..\components\net\freemodbus\port\port.h)(0x59E044C6)
 I (drivers\stm32f10x_conf.h)(0x59E044C6)
@@ -3172,7 +3196,7 @@ I (..\..\components\net\freemodbus\modbus\include\mbproto.h)(0x59E044C6)
 I (..\..\components\net\freemodbus\modbus\include\mb_m.h)(0x59E044C6)
 I (..\..\components\net\freemodbus\modbus\include\mbframe.h)(0x59E044C6)
 I (..\..\components\net\freemodbus\modbus\include\mbutils.h)(0x59E044C6)
-I (.\applications\my_app\global.h)(0x5AB51A99)
+I (.\applications\my_app\global.h)(0x5ABA1EE6)
 I (.\applications\my_app\app_config.h)(0x5A0982F5)
 I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x588B8344)
 I (C:\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x588B8344)

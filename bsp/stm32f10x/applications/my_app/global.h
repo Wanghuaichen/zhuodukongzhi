@@ -33,19 +33,9 @@ enum DATA_TYPE
 };
 
 typedef struct zhudu
-{
-    // user    
-    float turbidimeter_range_1;
-    float turbidimeter_range_2;
-    float turbidimeter_range_3;
-    float turbidimeter_range_4;
-    
-    int16_t canbi_set;
-    int16_t bright_range_set;
-    int16_t ma_cali;
-    
+{   
 	//0x100 start
-	int16_t canbi_get;
+	int16_t canbi_set;
 	int16_t bright_2;
 	int16_t bright_3;
 	int16_t bright_range;
@@ -71,9 +61,9 @@ typedef struct zhudu
 	float canbi_calc_get;
 	
 	uint16_t ma_stat;
+    uint16_t reserved;
 	uint16_t num_cali;
-	
-	int16_t signal_unknown;
+	int16_t canbi_get;
 
 	// 0x200 start
 	float turbidimeter_cali_buf[4];
@@ -109,8 +99,11 @@ typedef struct
     uint32_t serial_no;
     
     uint8_t unit;
+    uint8_t temp_select;
+    int16_t temp;
     int16_t temp_compensate;
     
+    uint8_t is_relay_test;
     uint8_t relay_1_alarm_type;
     float relay_1_alarm_val;
     float relay_1_alarm_delay;
@@ -119,19 +112,9 @@ typedef struct
     float relay_2_alarm_val;
     float relay_2_alarm_delay;
     
-    
-    uint8_t curr_out_1_stat:2;
-    uint8_t curr_out_2_stat:2;
-    
-    float curr_out_1_duty4;
-    float curr_out_1_duty20;
-    float curr_out_1_uplimit;
-    float curr_out_1_downlimit;
-    
-    float curr_out_2_duty4;
-    float curr_out_2_duty20;
-    float curr_out_2_uplimit;
-    float curr_out_2_downlimit;
+    int32_t clean_interval;
+    int32_t clean_time;
+    uint8_t backlight;
     
     Zhuodu_t zhuodu_data;
     
@@ -139,6 +122,8 @@ typedef struct
 }GlobalDef;    
 
 #define global_offset(A)        (offsetof(GlobalDef,A))
+#define zhuodu_offset(A)        (offsetof(Zhuodu_t,A))
+
 #ifdef RUNTIME_MAKE_REAL
     GlobalDef global;
 

@@ -127,6 +127,7 @@ static rt_size_t fm24clxx_write(rt_device_t dev, rt_off_t pos, const void *buffe
     msg[1].len      = size;
 
     ret = rt_i2c_transfer(fm24clxx->bus, msg, 2);
+	//rt_thread_sleep(5);
     return (ret == 2) ? size : 0;
 }
 

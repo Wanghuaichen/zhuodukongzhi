@@ -19,7 +19,7 @@
  * File: $Id: user_mb_app.c,v 1.60 2013/11/23 11:49:05 Armink $
  */
 #include "user_mb_app.h"
-
+#include "global.h"
 /*------------------------Slave mode use these variables----------------------*/
 //Slave mode:DiscreteInputs variables
 USHORT   usSDiscInStart                               = S_DISCRETE_INPUT_START;
@@ -59,7 +59,8 @@ eMBErrorCode eMBRegInputCB(UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNReg
     USHORT          REG_INPUT_START;
     USHORT          REG_INPUT_NREGS;
     USHORT          usRegInStart;
-
+    USHORT *        p;
+    
     pusRegInputBuf = usSRegInBuf;
     REG_INPUT_START = S_REG_INPUT_START;
     REG_INPUT_NREGS = S_REG_INPUT_NREGS;
@@ -71,6 +72,9 @@ eMBErrorCode eMBRegInputCB(UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNReg
     if ((usAddress >= REG_INPUT_START)
             && (usAddress + usNRegs <= REG_INPUT_START + REG_INPUT_NREGS))
     {
+        p = (USHORT*) &global.zhuodu_data.turbidimeter;
+        usSRegInBuf[0] = p[1];
+        usSRegInBuf[1] = p[0];
         iRegIndex = usAddress - usRegInStart;
         while (usNRegs > 0)
         {
@@ -107,7 +111,8 @@ eMBErrorCode eMBRegHoldingCB(UCHAR * pucRegBuffer, USHORT usAddress,
     USHORT          REG_HOLDING_START;
     USHORT          REG_HOLDING_NREGS;
     USHORT          usRegHoldStart;
-
+    USHORT *  p;
+    
     pusRegHoldingBuf = usSRegHoldBuf;
     REG_HOLDING_START = S_REG_HOLDING_START;
     REG_HOLDING_NREGS = S_REG_HOLDING_NREGS;
@@ -119,6 +124,10 @@ eMBErrorCode eMBRegHoldingCB(UCHAR * pucRegBuffer, USHORT usAddress,
     if ((usAddress >= REG_HOLDING_START)
             && (usAddress + usNRegs <= REG_HOLDING_START + REG_HOLDING_NREGS))
     {
+        p = (USHORT*) &global.zhuodu_data.turbidimeter;
+        pusRegHoldingBuf[0] = p[1];
+        pusRegHoldingBuf[1] = p[0];
+        
         iRegIndex = usAddress - usRegHoldStart;
         switch (eMode)
         {

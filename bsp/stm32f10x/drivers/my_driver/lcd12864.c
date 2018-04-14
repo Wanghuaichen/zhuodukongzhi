@@ -4,6 +4,26 @@
 #include "global.h"
 #include "rtdevice.h"
 
+#define USE_EMF_DRF 0
+
+#if USE_EMF_DRV
+#define LCD_GPIO_RST_PORT	GPIOC
+#define LCD_GPIO_RST		GPIO_Pin_12
+
+#define LCD_GPIO_CS_PORT	GPIOD
+#define LCD_GPIO_CS			GPIO_Pin_2
+
+#define LCD_GPIO_CD_PORT	GPIOC
+#define LCD_GPIO_CD			GPIO_Pin_11
+
+#define LCD_GPIO_SCK_PORT	GPIOC
+#define LCD_GPIO_SCK		GPIO_Pin_10
+
+#define LCD_GPIO_SDA_PORT	GPIOA
+#define LCD_GPIO_SDA		GPIO_Pin_15
+
+#else
+
 #define LCD_GPIO_RST_PORT	GPIOD
 #define LCD_GPIO_RST		GPIO_Pin_2
 
@@ -19,7 +39,8 @@
 #define LCD_GPIO_SDA_PORT	GPIOC
 #define LCD_GPIO_SDA		GPIO_Pin_10
 
-#if 1
+#endif
+
 #define LCD_RST_1()  LCD_GPIO_RST_PORT->BSRR = LCD_GPIO_RST	
 #define LCD_RST_0()  LCD_GPIO_RST_PORT->BRR = LCD_GPIO_RST
 
@@ -35,23 +56,6 @@
 #define LCD_SDA_1()  LCD_GPIO_SDA_PORT->BSRR = LCD_GPIO_SDA 
 #define LCD_SDA_0()  LCD_GPIO_SDA_PORT->BRR = LCD_GPIO_SDA 
 
-
-#else
-#define LCD_RST_1()  rt_pin_write(54,PIN_HIGH)      // LCD_GPIO_RST_PORT->BSRR = LCD_GPIO_RST	
-#define LCD_RST_0()  rt_pin_write(54,PIN_LOW)      //LCD_GPIO_RST_PORT->BRR = LCD_GPIO_RST
-
-#define LCD_CS_1()  rt_pin_write(55,PIN_HIGH)       //LCD_GPIO_CS_PORT->BSRR = LCD_GPIO_CS
-#define LCD_CS_0()  rt_pin_write(55,PIN_LOW)       //LCD_GPIO_CS_PORT->BRR = LCD_GPIO_CS
-
-#define LCD_CD_1()  rt_pin_write(53,PIN_HIGH)       //LCD_GPIO_CD_PORT->BSRR = LCD_GPIO_CD
-#define LCD_CD_0()  rt_pin_write(53,PIN_LOW)       //LCD_GPIO_CD_PORT->BRR = LCD_GPIO_CD
-
-#define LCD_SCK_1()  rt_pin_write(52,PIN_HIGH)      //LCD_GPIO_SCK_PORT->BSRR = LCD_GPIO_SCK 
-#define LCD_SCK_0()  rt_pin_write(52,PIN_LOW)      //LCD_GPIO_SCK_PORT->BRR = LCD_GPIO_SCK 
-
-#define LCD_SDA_1()  rt_pin_write(51,PIN_HIGH)      //LCD_GPIO_SDA_PORT->BSRR = LCD_GPIO_SDA 
-#define LCD_SDA_0()  rt_pin_write(51,PIN_LOW)      //LCD_GPIO_SDA_PORT->BRR = LCD_GPIO_SDA 
-#endif
 // frame buffer
 static uint8_t lcd_buf[8][128];
 

@@ -11,10 +11,10 @@ extern "C" {
 #include <math.h>
 #include "global.h"
  
-#define    EE_FULL_RECOVERY_ING   0x6056
-#define    EE_FULL_RECOVERY_OVER  0x60A6
-#define	   EE_RESET_FACTORY_ING   0x6506
-#define    EE_RESET_FACTORY_OVER  0x6A06
+#define    EE_FULL_RECOVERY_ING   0x6066
+#define    EE_FULL_RECOVERY_OVER  0x60B6
+#define	   EE_RESET_FACTORY_ING   0x6516
+#define    EE_RESET_FACTORY_OVER  0x6A16
 
  
 typedef struct
@@ -25,15 +25,6 @@ typedef struct
     uint8_t lcd_contrast;
 	uint8_t is_disp_reverse;
     uint32_t password;
-    
-    float curr_out_1_duty4;
-    float curr_out_1_duty20;
-    float curr_out_1_uplimit;
-    float curr_out_1_downlimit;
-    float curr_out_2_duty4;
-    float curr_out_2_duty20;
-    float curr_out_2_uplimit;
-    float curr_out_2_downlimit;
     
 	//unprotected
     uint8_t unprotected;
@@ -47,11 +38,19 @@ typedef struct
     uint8_t zhuodu_addr;
     
     uint8_t relay_1_alarm_type;
+    float relay_1_alarm_val;
+    float relay_1_alarm_delay;
     uint8_t relay_2_alarm_type;
+    float relay_2_alarm_val;
+    float relay_2_alarm_delay;
     
     uint8_t unit;
     int16_t temp_compensate;
     uint32_t serial_no;
+    
+    int32_t clean_interval;
+    int32_t clean_time;
+    uint8_t backlight
     
 }E2P_TypeDef;
 

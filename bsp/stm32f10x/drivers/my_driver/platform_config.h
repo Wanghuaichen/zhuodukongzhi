@@ -11,6 +11,7 @@ extern "C" {
 #include "stm32f10x.h"
 
 /** button */
+#if 1    
 #define UPKEY_GPIO_CLK              RCC_APB2Periph_GPIOB
 #define UPKEY_GPIO_PORT             GPIOB
 #define UPKEY_PIN                   GPIO_Pin_6
@@ -23,7 +24,20 @@ extern "C" {
 #define OKKEY_GPIO_CLK              RCC_APB2Periph_GPIOB
 #define OKKEY_GPIO_PORT             GPIOB
 #define OKKEY_PIN                   GPIO_Pin_4
-
+#else
+#define UPKEY_GPIO_CLK              RCC_APB2Periph_GPIOB
+#define UPKEY_GPIO_PORT             GPIOB
+#define UPKEY_PIN                   GPIO_Pin_4
+#define DOWNKEY_GPIO_CLK            RCC_APB2Periph_GPIOB
+#define DOWNKEY_GPIO_PORT           GPIOB
+#define DOWNKEY_PIN                 GPIO_Pin_5
+#define MENUKEY_GPIO_CLK            RCC_APB2Periph_GPIOB
+#define MENUKEY_GPIO_PORT           GPIOB
+#define MENUKEY_PIN                 GPIO_Pin_6
+#define OKKEY_GPIO_CLK              RCC_APB2Periph_GPIOB
+#define OKKEY_GPIO_PORT             GPIOB
+#define OKKEY_PIN                   GPIO_Pin_3
+#endif
 
 #define UpKeyDown()                 (GPIO_ReadInputDataBit(UPKEY_GPIO_PORT, UPKEY_PIN) == Bit_RESET)
 #define DownKeyDown()               (GPIO_ReadInputDataBit(DOWNKEY_GPIO_PORT, DOWNKEY_PIN) == Bit_RESET)

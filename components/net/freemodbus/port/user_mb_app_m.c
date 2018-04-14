@@ -109,8 +109,8 @@ eMBErrorCode eMBMasterRegHoldingCB(UCHAR * pucRegBuffer, USHORT usAddress,
     USHORT          REG_HOLDING_START;
     USHORT          REG_HOLDING_NREGS;
     USHORT          usRegHoldStart;
-    uint16_t i;
-    uint8_t *p,*q;
+    uint16_t i,j,k,reg_tmp;
+    uint16_t *p,*q;
 
     pusRegHoldingBuf = usMRegHoldBuf[ucMBMasterGetDestAddress() - 1];
    
@@ -141,16 +141,10 @@ eMBErrorCode eMBMasterRegHoldingCB(UCHAR * pucRegBuffer, USHORT usAddress,
         {
         /* read current register values from the protocol stack. */
         case MB_REG_READ:  /// !!! NO USE
-//            while (usNRegs > 0)
-//            {
-//                *pucRegBuffer++ = (UCHAR) (pusRegHoldingBuf[iRegIndex] >> 8);
-//                *pucRegBuffer++ = (UCHAR) (pusRegHoldingBuf[iRegIndex] & 0xFF);
-//                iRegIndex++;
-//                usNRegs--;
-//            }
             break;
         /* write current register values with new values from the protocol stack. */
         case MB_REG_WRITE:
+            reg_tmp = usNRegs;
             while (usNRegs > 0)
             {
                 pusRegHoldingBuf[iRegIndex] = *pucRegBuffer++ << 8;
@@ -162,22 +156,54 @@ eMBErrorCode eMBMasterRegHoldingCB(UCHAR * pucRegBuffer, USHORT usAddress,
         }
         if(usAddress >= 0x100)
         {
-            p = (uint8_t*)&global.zhuodu_data.canbi_get;
-            q = (uint8_t*)pusRegHoldingBuf;
-            for(i = 0; i < 2*usNRegs; i++)
+            p = (uint16_t*)&global.zhuodu_data.canbi_set;
+            q = (uint16_t*)pusRegHoldingBuf;
+            
+            for(i = 0; i < 5; i ++)
             {
                 p[i] = q[i];
             }
+            p = (uint16_t*)&global.zhuodu_data.turbidimeter;
+            j = i + 12*2; k = i;
+            for(; i < j; i += 2)
+            {
+                p[i-k] = q[i+1];
+                p[i-k+1] = q[i];
+            }
+            p[i] = q[i]; i++;
+            p[i] = q[i]; i++;
+            
+            p[i] = q[i+1];
+            p[i+1] = q[i];
+            i += 2;
+            p[i] = q[i]; i++;
+            p[i] = q[i]; i++;
+            p[i] = q[i]; i++;
+            p[i] = q[i]; i++;
+        
         }
         else if(usAddress >= 0x200)
         {
-            p = (uint8_t*)&global.zhuodu_data.turbidimeter_cali_buf[0];
-            q = (uint8_t*)pusRegHoldingBuf;
-            for(i = 0; i < 2*usNRegs; i++)
+            p = (uint16_t*)&global.zhuodu_data.turbidimeter_cali_buf[0];
+            q = (uint16_t*)pusRegHoldingBuf;
+            
+            for(i = 0; i < 16; i += 2)
             {
-                p[i] = q[i];
+                p[i] = q[i+1];
+                p[i+1] = q[i];
             }
-        }
+            p[i] = q[i]; i++;
+            p[i] = q[i]; i++;
+            j = i + 8;
+            for(; i < j; i += 2)
+            {
+                p[i] = q[i+1];
+                p[i+1] = q[i];
+            }
+            p[i] = q[i]; i++;
+            p[i] = q[i]; i++;
+            p[i] = q[i]; i++;
+        }        
     }
     else
     {
